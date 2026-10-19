@@ -177,6 +177,110 @@
         #splash .splash-body { animation: splash-in .8s .15s cubic-bezier(.2,.8,.2,1) both; }
         @keyframes splash-in { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
         @media (prefers-reduced-motion: reduce) { #splash .splash-crest, #splash .splash-body { animation: none; } }
+        /* ---- Cartelera: tarjetas de pick ---- */
+        .sl-card {
+            border-radius: 1.6rem; padding: 1.15rem 1.15rem 1.1rem;
+            background: linear-gradient(165deg, #121b2a, #0c121d);
+            border: 1px solid rgba(110, 130, 160, 0.28);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 18px 36px -24px rgba(0,0,0,0.9);
+            transition: border-color .2s, transform .2s;
+        }
+        .sl-card:hover { border-color: rgba(150, 175, 210, 0.45); }
+        .sl-card.is-selected { border-color: rgba(242, 184, 75, 0.55); }
+        .sl-team { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.9rem; line-height: 1; color: #f1f5fb; letter-spacing: 0.01em; }
+        .sl-side { display: block; margin-top: .45rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: #8a96aa; }
+        .sl-ball { display: flex; align-items: center; justify-content: center; padding-top: .15rem; filter: drop-shadow(0 6px 8px rgba(0,0,0,.6)); }
+        .sl-pick {
+            margin-top: .9rem; display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+            padding: .85rem 1rem; border-radius: 1.1rem; background: #151f30; border: 1px solid rgba(120, 140, 170, 0.32);
+        }
+        .sl-pick.is-value { border-color: rgba(52, 211, 153, 0.45); background: linear-gradient(160deg, rgba(16, 60, 45, .55), #151f30); }
+        .sl-kicker { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: #8fb8f0; }
+        .sl-pick.is-value .sl-kicker { color: #6ee7b7; }
+        .sl-pick-label { display: block; margin-top: .2rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.25rem; color: #f1f5fb; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sl-pick-pct { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.35rem; color: #fff; white-space: nowrap; }
+        .sl-analyze {
+            margin-top: .75rem; width: 100%; padding: .8rem; border-radius: 1rem; background: #0b111c;
+            border: 1px solid rgba(120, 140, 170, 0.35); color: #93c5fd; font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600; letter-spacing: .32em; text-transform: uppercase; font-size: 14px; transition: background .2s, color .2s, border-color .2s;
+        }
+        .sl-analyze:hover { background: #111a2a; color: #dbeafe; border-color: rgba(147, 197, 253, .5); }
+
+        /* ---- Análisis animado ---- */
+        .an-close {
+            position: absolute; top: -0.6rem; right: -0.4rem; z-index: 5; width: 3rem; height: 3rem; border-radius: 9999px;
+            display: flex; align-items: center; justify-content: center; background: #0b1220; color: #fff;
+            border: 1px solid rgba(255,255,255,.12); box-shadow: 0 10px 24px -8px rgba(0,0,0,.8);
+        }
+        .an-card { background: #ffffff; color: #0b1220; border-radius: 1.9rem; padding: 1.4rem 1.4rem 1.2rem; box-shadow: 0 30px 60px -20px rgba(0,0,0,.85); }
+        .an-stage {
+            position: relative; aspect-ratio: 1 / 0.93; background-color: #fff; border-radius: 1.3rem; overflow: hidden;
+            background: radial-gradient(circle at 50% 42%, #ffffff 0%, #eef2f8 55%, #dfe6f1 100%);
+        }
+        .an-mascot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 0; transition: opacity .4s; }
+        .an-mascot.is-ready { opacity: 1; }
+        .an-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+        .an-league { width: 34%; height: 34%; object-fit: contain; filter: drop-shadow(0 12px 18px rgba(30,50,90,.25)); animation: an-float 3s ease-in-out infinite; }
+        .an-ring { position: absolute; width: 58%; aspect-ratio: 1; border-radius: 9999px; border: 2px solid rgba(96, 165, 250, .45); animation: an-pulse 2.2s ease-out infinite; }
+        .an-ring-2 { animation-delay: 1.1s; }
+        .an-scan { position: absolute; left: 8%; right: 8%; height: 2px; background: linear-gradient(90deg, transparent, rgba(56, 189, 248, .8), transparent); animation: an-scan 2.4s ease-in-out infinite; }
+        .an-match { position: absolute; left: 0; right: 0; bottom: .8rem; display: flex; justify-content: center; align-items: baseline; gap: .6rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.15rem; color: #0b1220; }
+        .an-match span { background: rgba(255,255,255,.85); padding: .1rem .6rem; border-radius: .5rem; }
+        .an-match small { color: #64748b; font-size: .9rem; }
+        @keyframes an-float { 50% { transform: translateY(-6px); } }
+        @keyframes an-pulse { from { transform: scale(.7); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
+        @keyframes an-scan { 0%, 100% { top: 18%; } 50% { top: 82%; } }
+        .an-progress { margin-top: 1.1rem; height: 7px; border-radius: 9999px; background: #121a28; overflow: hidden; }
+        .an-progress span { display: block; height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #e5484d, #c084fc 55%, #93c5fd); transition: width .45s ease; }
+        .an-lines { margin-top: 1rem; min-height: 9rem; font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 14.5px; line-height: 1.75; color: #7c879b; }
+        .an-line { animation: an-in .35s ease both; line-height: 1.5; padding: .12rem 0 .12rem 1.1em; text-indent: -1.1em; }
+        .an-line::before { content: '▸ '; color: #94a3b8; }
+        .an-line.an-done { color: #22c55e; font-weight: 700; letter-spacing: .04em; }
+        .an-line.an-warn { color: #d97706; font-weight: 700; }
+        .an-line.an-done::before, .an-line.an-warn::before { content: ''; }
+        .an-line.an-wait { color: #94a3b8; }
+        @keyframes an-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+        .an-skip { margin-top: .6rem; background: #0b1220; color: #fff; border-radius: 9999px; padding: .85rem 2.4rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .32em; font-size: 15px; }
+
+        /* ---- Panel de mercados ---- */
+        .mk-card { border-radius: 1.9rem; padding: 1.5rem 1.3rem 1.3rem; background: linear-gradient(165deg, #131c2c, #0b111b); border: 1px solid rgba(120, 140, 170, 0.3); box-shadow: 0 30px 60px -20px rgba(0,0,0,.9); }
+        .mk-team { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 2.2rem; line-height: 1; color: #f1f5fb; }
+        .mk-side { display: block; margin-top: .55rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 12.5px; letter-spacing: .24em; text-transform: uppercase; color: #8a96aa; }
+        .mk-row { display: grid; grid-template-columns: minmax(6.6rem, 1.15fr) minmax(2.5rem, 1fr) 3.5rem 4.4rem; gap: .55rem; align-items: center; }
+        .mk-label { display: block; font-size: 15px; line-height: 1.2; color: #e2e8f0; overflow-wrap: anywhere; }
+        .mk-fair { display: block; font-size: 12px; color: #7d8aa0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mk-bar { height: 10px; border-radius: 9999px; background: #182234; overflow: hidden; }
+        .mk-bar span { display: block; height: 100%; border-radius: 9999px; background: linear-gradient(90deg, #2c4b78, #5d8bc9); transition: width .5s ease; }
+        .mk-row.is-top .mk-bar span { background: linear-gradient(90deg, #3b82f6, #a5d4ff); }
+        .mk-row.is-top .mk-label { color: #fff; font-weight: 600; }
+        .mk-pct { text-align: right; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 1.15rem; color: #cbd5e1; }
+        .mk-row.is-top .mk-pct { color: #fff; }
+        .mk-odds { width: 100%; height: 2.6rem; border-radius: .8rem; background: #070b12; border: 1px solid rgba(140, 160, 190, .35); color: #cbd5e1; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 1.05rem; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+        .mk-odds small { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: #7ee05f; margin-top: 2px; }
+        .mk-odds-input { text-align: center; outline: none; border-color: #60a5fa; color: #fff; padding: 0 .3rem; }
+        .mk-more { cursor: pointer; list-style: none; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: #93c5fd; }
+        .mk-more::-webkit-details-marker { display: none; }
+        .mk-more::before { content: '▶ '; display: inline-block; transition: transform .2s; }
+        details[open] > .mk-more::before { transform: rotate(90deg); }
+        .mk-pick { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1.05rem 1.2rem; border-radius: 1.2rem; background: #151f30; border: 1.5px solid rgba(130, 150, 185, 0.45); }
+        .mk-pick.is-value { border-color: rgba(52, 211, 153, .55); background: linear-gradient(160deg, rgba(16, 60, 45, .55), #151f30); }
+        .mk-kicker { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .22em; text-transform: uppercase; }
+        .mk-pick-label { display: block; margin-top: .25rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.85rem; line-height: 1.05; color: #fff; }
+        .mk-pick-pct { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.45rem; color: #fff; white-space: nowrap; }
+        .mk-stake { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: 1rem 1.2rem; border-radius: 1.2rem; background: linear-gradient(160deg, rgba(60, 16, 24, .55), #141b29); border: 1.5px solid rgba(190, 70, 90, 0.45); }
+        .mk-stake-amt { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.45rem; color: #fb7185; text-align: right; }
+        .mk-chip { font-size: 13px; padding: .3rem .75rem; border-radius: 9999px; border: 1px solid rgba(140, 160, 190, .35); color: #b6c2d4; background: rgba(255,255,255,.02); }
+        .mk-chip.is-green { border-color: rgba(52, 211, 153, .55); color: #6ee7b7; background: rgba(16, 185, 129, .08); }
+        .mk-cta { padding: .75rem; border-radius: 1rem; background: #0b111c; border: 1px solid rgba(120, 140, 170, 0.35); color: #93c5fd; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; font-size: 13px; }
+        .mk-cta:hover { color: #dbeafe; border-color: rgba(147, 197, 253, .5); }
+        @media (max-width: 400px) {
+            .mk-row { grid-template-columns: minmax(5.8rem, 1.2fr) minmax(1.8rem, 1fr) 3.1rem 3.9rem; gap: .4rem; }
+            .mk-team { font-size: 1.9rem; } .mk-pick-label { font-size: 1.55rem; }
+            .an-lines { font-size: 13px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .an-league, .an-ring, .an-scan, .an-line { animation: none; }
+        }
     </style>
 </head>
 <body class="min-h-screen pb-12">
@@ -474,7 +578,11 @@
                         <i data-lucide="undo-2" class="w-3.5 h-3.5"></i>
                         <span>Volver a hoy</span>
                     </button>
-                    <button onclick="addGame()" class="bg-gradient-to-b from-[#f5c566] to-[#d99a2b] hover:brightness-110 text-[#1a1205] px-3 py-1.5 rounded-lg transition font-semibold flex items-center space-x-1">
+                    <button onclick="importSlate(currentSport)" class="bg-gradient-to-b from-[#f5c566] to-[#d99a2b] hover:brightness-110 text-[#1a1205] px-3 py-1.5 rounded-lg transition font-semibold flex items-center space-x-1" title="Trae de ESPN todos los juegos del día de este deporte">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span>Cargar juegos</span>
+                    </button>
+                    <button onclick="addGame()" class="bg-black/25 border border-white/15 hover:border-white/30 text-gray-200 px-3 py-1.5 rounded-lg transition font-semibold flex items-center space-x-1" title="Agregar un juego a mano">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                         <span>Agregar juego</span>
                     </button>
@@ -484,10 +592,11 @@
                     </button>
                 </div>
             </div>
+            <p id="import-status" class="hidden text-xs text-gray-400"></p>
             <div id="slate-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             <div id="slate-empty" class="text-center py-8 text-sm text-gray-400">
                 <i data-lucide="clipboard-list" class="w-8 h-8 mx-auto mb-2 text-gray-600"></i>
-                <p id="slate-empty-text">Aún no hay juegos para hoy. Elige el deporte arriba y pulsa <strong class="text-white">Agregar juego</strong> para cargar el primer encuentro.</p>
+                <p id="slate-empty-text">Aún no hay juegos para hoy. Elige el deporte arriba y pulsa <strong class="text-white">Cargar juegos</strong>.</p>
             </div>
         </div>
 
@@ -844,6 +953,19 @@
         </div>
     </div>
     <!-- Team picker popover (opened by the arrow next to each team name) -->
+    <!-- ANÁLISIS ANIMADO + PANEL DE MERCADOS: se abre con "Analizar" en cada juego de la cartelera -->
+    <div id="an-overlay" class="hidden fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm overflow-y-auto" onclick="if (event.target === this || event.target.id === 'an-wrap') closeAnalysis()" role="dialog" aria-modal="true" aria-label="Análisis del juego">
+        <div id="an-wrap" class="min-h-full flex items-start sm:items-center justify-center px-3 py-6 sm:p-8">
+            <div class="relative w-full max-w-xl">
+                <button onclick="closeAnalysis()" class="an-close" aria-label="Cerrar" title="Cerrar">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </button>
+                <div id="an-run" class="an-card"></div>
+                <div id="an-panel" class="hidden mk-card"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="team-picker" class="hidden fixed z-[60] w-72 max-w-[calc(100vw-1rem)] rounded-2xl border border-white/10 bg-[#0d1420]/95 backdrop-blur-xl shadow-2xl overflow-hidden" role="dialog">
         <div class="p-2 border-b border-white/10">
             <input type="text" id="team-picker-search" placeholder="Buscar equipo..." autocomplete="off" oninput="renderTeamPicker()"
@@ -987,7 +1109,7 @@
             lucide.createIcons();
         }
 
-        async function autoLoadTeam(team, game = currentGame()) {
+        async function autoLoadTeam(team, game = currentGame(), { bulk = false } = {}) {
             const key = team === 'A' ? 'teamA' : 'teamB';
             const query = game[key].name;
             if (!query) return;
@@ -1026,7 +1148,8 @@
                 } else {
                     renderSlate();
                 }
-                if (game.teamA.abbr && game.teamB.abbr) { syncOdds({ only: game }); loadMatchupContext(game); }
+                // Bulk loads (whole slate) sync odds and context once at the end instead of per game
+                if (!bulk && game.teamA.abbr && game.teamB.abbr) { syncOdds({ only: game }); loadMatchupContext(game); }
                 setLoadStatus(game, team, 'ok', data.games.length
                     ? `Cargados los últimos ${data.games.length} partidos de ${match.name}`
                     : `${match.name} no tiene partidos recientes disponibles`);
@@ -1144,6 +1267,7 @@
                 renderTeamOptions(currentSport);
                 syncOdds();
                 games.forEach(g => loadMatchupContext(g)); // H2H and injuries also feed the Bank picks
+                maybeAutoImport(); // empty sport today -> bring the day's games from ESPN
             } catch {
                 if (token !== dayLoadToken) return;
                 const el = document.getElementById('save-status');
@@ -1246,7 +1370,7 @@
             lucide.createIcons();
         }
 
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCalendar(); closeResults(); closeScores(); closePicks(); closeLadder(); if (!pickerTeam) closeGame(); } });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCalendar(); closeResults(); closeScores(); closePicks(); closeLadder(); closeAnalysis(); if (!pickerTeam) closeGame(); } });
 
         // ---- Final scores (ESPN scoreboard via /api/sports/scoreboard) ----
         const SPORTS = ['NHL', 'NBA', 'NFL', 'NCAAF', 'MLB'];
@@ -2054,6 +2178,8 @@
             else renderSlate();
             renderSportSelector();
             renderTeamOptions(sport);
+            setImportStatus('');
+            maybeAutoImport();
         }
 
         function renderSportSelector() {
@@ -2819,16 +2945,10 @@
         }
 
         function gamePickCandidates(game) {
-            const p = computeProjection(game);
-            const nMin = Math.min(p.a.n, p.b.n);
-            if (nMin < MIN_GAMES) return [];
-            const prior = sportSigma[game.sport] || sportSigma.NBA;
-            const played = [...game.teamA.scores, ...game.teamB.scores].filter(isComplete);
-            const sigM = blendSigma(prior.margin, played.map(s => s.att - s.def));
-            const sigT = blendSigma(prior.total, played.map(s => s.att + s.def));
-            // Fewer L10 rows -> pull the probability back toward a coin flip
-            const shrink = Math.sqrt(nMin / 10);
-            const adj = prob => 0.5 + (prob - 0.5) * shrink;
+            // Same probabilities as the market panel (Poisson / binomial negativa / normal by sport)
+            const m = marketModel(game);
+            if (!m.ready || m.nMin < MIN_GAMES) return [];
+            const p = m.p;
 
             const nameA = game.teamA.name || 'Local';
             const nameB = game.teamB.name || 'Visitante';
@@ -2856,19 +2976,22 @@
                 });
             };
 
-            const winA = adj(normCdf(p.scoreDiff / sigM));
-            add('ML', `${nameA} ML`, winA, game.mlA, 'A');
-            add('ML', `${nameB} ML`, 1 - winA, game.mlB, 'B');
+            // The bettor's own odds (typed in the market panel) win over DraftKings / manual ones
+            const priceOf = (key, book) => userAm(game, key) ?? book;
+            add('ML', `${nameA} ML`, m.mlA, priceOf('ml-A', game.mlA), 'A');
+            add('ML', `${nameB} ML`, 1 - m.mlA, priceOf('ml-B', game.mlB), 'B');
 
             if (Number.isFinite(game.spread)) {
-                const coverA = adj(normCdf((p.scoreDiff + game.spread) / sigM));
-                add('Spread', `${nameA} ${fmtLine(game.spread)}`, coverA, game.spreadOddsA, 'A', game.spread);
-                add('Spread', `${nameB} ${fmtLine(-game.spread)}`, 1 - coverA, game.spreadOddsB, 'B', -game.spread);
+                const s = game.spread;
+                add('Spread', `${nameA} ${fmtLine(s)}`, condProb(m.D.cover('A', s)), priceOf(`sp-A:${s}`, game.spreadOddsA), 'A', s);
+                add('Spread', `${nameB} ${fmtLine(-s)}`, condProb(m.D.cover('B', -s)), priceOf(`sp-B:${-s}`, game.spreadOddsB), 'B', -s);
             }
             if (Number.isFinite(game.line)) {
-                const over = adj(1 - normCdf((game.line - p.totalProjected) / sigT));
-                add('Total', `Over ${game.line}`, over, game.overOdds, 'over', game.line);
-                add('Total', `Under ${game.line}`, 1 - over, game.underOdds, 'under', game.line);
+                const t = game.line;
+                const over = m.D.total(t);
+                const under = { win: Math.max(0, 1 - over.win - over.push), push: over.push };
+                add('Total', `Over ${t}`, condProb(over), priceOf(`tot-o:${t}`, game.overOdds), 'over', t);
+                add('Total', `Under ${t}`, condProb(under), priceOf(`tot-u:${t}`, game.underOdds), 'under', t);
             }
             return out;
         }
@@ -3397,48 +3520,53 @@
             document.getElementById('slate-count').innerText = `${shown.length} ${shown.length === 1 ? 'juego' : 'juegos'} de ${currentSport}`;
             const isToday = viewDate === todayKey();
             document.getElementById('slate-empty-text').innerHTML = isToday
-                ? `Aún no hay juegos de ${currentSport} para hoy. Pulsa <strong class="text-white">Agregar juego</strong> para cargar el primer encuentro de ${currentSport}.`
-                : `No hay análisis de ${currentSport} registrados este día. Puedes agregar juegos con <strong class="text-white">Agregar juego</strong>.`;
+                ? `Aún no hay juegos de ${currentSport} en la cartelera. Pulsa <strong class="text-white">Cargar juegos</strong> para traer los del día, o <strong class="text-white">Agregar juego</strong> para uno a mano.`
+                : `No hay análisis de ${currentSport} registrados este día. Pulsa <strong class="text-white">Cargar juegos</strong> para traer los de esa fecha.`;
+            renderAnalysisPanel();
 
-            list.innerHTML = shown.map(game => {
-                const p = computeProjection(game);
-                const ev = totalsVerdict(p);
-                const a = teamInfo(game, 'A');
-                const b = teamInfo(game, 'B');
-                const nameA = escapeHtml(game.teamA.name || 'Local');
-                const nameB = escapeHtml(game.teamB.name || 'Visitante');
-                const selected = game.id === selectedId;
-                const fav = !p.hasData ? '' : p.probA > 55 ? `Fav ${escapeHtml(a.abbr || nameA)} ${Math.round(p.probA)}%`
-                    : p.probB > 55 ? `Fav ${escapeHtml(b.abbr || nameB)} ${Math.round(p.probB)}%` : 'Parejo';
-                const row = (info, name, score, lead) => `
-                        <div class="flex items-center gap-3">
-                            ${crest(info, 'w-10 h-10', 'text-xs')}
-                            <span class="flex-1 min-w-0 font-cond font-bold text-[15px] uppercase tracking-wide truncate ${lead ? 'text-white' : 'text-gray-300'}">${name}</span>
-                            <span class="font-display font-black text-2xl leading-none ${lead ? 'text-white' : 'text-gray-500'}">${p.hasData ? score.toFixed(1) : '–'}</span>
+            const ordered = [...shown].sort((x, y) => (startOf(x) ? new Date(startOf(x)).getTime() : Infinity) - (startOf(y) ? new Date(startOf(y)).getTime() : Infinity));
+            list.innerHTML = ordered.map(game => {
+                const m = marketModel(game);
+                const A = escapeHtml(shortName(game, 'A'));
+                const B = escapeHtml(shortName(game, 'B'));
+                const d = 1;
+                const pick = m.ready ? (m.value || m.safe) : null;
+                const loading = teamLoading(game);
+                const state = game.dk?.state;
+                const pickBox = pick ? `
+                        <div class="sl-pick ${m.value ? 'is-value' : ''}">
+                            <div class="min-w-0">
+                                <span class="sl-kicker">${m.value ? `Pick con valor · +${(m.value.edge * 100).toFixed(1)}%` : 'Pick'}</span>
+                                <span class="sl-pick-label">${escapeHtml(pick.label)}</span>
+                            </div>
+                            <span class="sl-pick-pct">${(pick.prob * 100).toFixed(1)}%</span>
+                        </div>` : `
+                        <div class="sl-pick">
+                            <div class="min-w-0">
+                                <span class="sl-kicker">Pick</span>
+                                <span class="text-sm text-gray-400">${loading ? 'Cargando datos de ESPN...' : 'Faltan resultados L10'}</span>
+                            </div>
                         </div>`;
                 return `
-                    <button onclick="openGame(${game.id})" class="game-card relative overflow-hidden text-left p-4 rounded-2xl border ${selected ? 'border-[#f2b84b]/70 ring-1 ring-[#f2b84b]/40' : 'border-white/10 hover:border-white/25'}"
-                        style="background: linear-gradient(100deg, color-mix(in srgb, ${a.color} 18%, transparent), transparent 45%, transparent 55%, color-mix(in srgb, ${b.color} 18%, transparent)), linear-gradient(160deg, #142036, #0c131f);">
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="flex items-center gap-1.5 kicker text-gray-300">
-                                <img src="${leagueLogo(game.sport)}" alt="" class="w-4 h-4 object-contain" onerror="this.remove()">${game.sport}
-                                ${game.dk?.updatedAt ? `<span class="flex items-center gap-1 ml-1 px-1.5 py-0.5 rounded bg-black/40 border border-[#53d337]/40 text-[#7ee05f] text-[9px]" title="Cuotas de DraftKings">DK${dkAuto(game) && dkLiveDay() && !dkFrozen(game) ? '<span class="dk-dot"></span>' : ''}</span>` : ''}
-                            </span>
-                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${ev.cls}">${ev.short}</span>
+                    <div class="sl-card ${game.id === selectedId ? 'is-selected' : ''}">
+                        <div class="grid grid-cols-[1fr_auto_1fr] items-start gap-2">
+                            <div class="min-w-0">
+                                <span class="sl-team block truncate" title="${escapeHtml(game.teamA.name || '')}">${A}</span>
+                                <span class="sl-side">Local</span>
+                            </div>
+                            <span class="sl-ball" title="${game.sport}">${SPORT_BALL[game.sport] || ''}</span>
+                            <div class="min-w-0 text-right">
+                                <span class="sl-team block truncate" title="${escapeHtml(game.teamB.name || '')}">${B}</span>
+                                <span class="sl-side">Visita</span>
+                            </div>
                         </div>
-                        <div class="space-y-2.5">
-                            ${row(a, nameA, p.projScoreA, p.hasData && p.projScoreA >= p.projScoreB)}
-                            ${row(b, nameB, p.projScoreB, p.hasData && p.projScoreB > p.projScoreA)}
+                        <div class="flex items-center justify-between gap-2 mt-3 text-[15px] text-gray-300">
+                            <span class="flex items-center gap-2">${state === 'in' ? '<span class="dk-dot"></span>' : ''}${fmtStart(game) || '&nbsp;'}${game.dk?.updatedAt ? '<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-black/40 border border-[#53d337]/40 text-[#7ee05f]" title="Cuotas de DraftKings">DK</span>' : ''}</span>
+                            <span class="text-gray-400">${m.ready ? `Proy ${m.lA.toFixed(d)}–${m.lB.toFixed(d)}` : ''}</span>
                         </div>
-                        <div class="flex items-center justify-between font-cond text-xs text-gray-400 mt-3 pt-2.5 border-t border-white/[0.07]">
-                            <span>Total <strong class="text-[#f2b84b] text-sm">${p.hasData ? p.totalProjected.toFixed(1) : '–'}</strong>${game.line !== null ? ` <span class="text-gray-500">/ línea ${game.line}</span>` : ''}</span>
-                            <span class="font-semibold text-gray-300">${fav}</span>
-                        </div>
-                        ${game.picks?.length ? `
-                        <div class="flex flex-wrap gap-1.5 mt-2.5">
-                            ${game.picks.map((pk, i) => `<span class="text-[10px] font-bold px-2 py-0.5 rounded border ${i === 0 ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40' : 'bg-white/5 text-gray-300 border-white/15'}">${escapeHtml(pk.label)}${pk.edge !== null ? ` · +${(pk.edge * 100).toFixed(1)}%` : ''}</span>`).join('')}
-                        </div>` : ''}
-                    </button>`;
+                        ${pickBox}
+                        <button onclick="openAnalysis(${game.id})" class="sl-analyze">Analizar ▸</button>
+                    </div>`;
             }).join('');
         }
 
@@ -3512,6 +3640,607 @@
             distChartInstance.data.datasets[1].label = `Total Pts (${nameB})`;
             distChartInstance.data.datasets[1].data = totals(game.teamB);
             distChartInstance.update();
+        }
+
+        // ======================================================================
+        // ---- Motor de mercados: probabilidades por mercado según el deporte ----
+        // NHL: Poisson de goles · MLB: binomial negativa de carreras · NBA/NFL/NCAAF: normal sobre margen y total
+        // ======================================================================
+        const SPORT_CFG = {
+            NHL: { kind: 'poisson', home: 0.2, homeWin: 0.54, pyth: 2.0, unit: 'goles', model: 'Poisson', max: 15 },
+            MLB: { kind: 'negbin', r: 6, home: 0.15, homeWin: 0.54, pyth: 1.83, unit: 'carreras', model: 'Binomial neg.', max: 30 },
+            NBA: { kind: 'normal', home: 2.5, homeWin: 0.58, pyth: 13.9, unit: 'pts', model: 'Normal' },
+            NFL: { kind: 'normal', home: 1.5, homeWin: 0.56, pyth: 2.37, unit: 'pts', model: 'Normal' },
+            NCAAF: { kind: 'normal', home: 2.5, homeWin: 0.6, pyth: 2.37, unit: 'pts', model: 'Normal' }
+        };
+        const REG_K = 4;          // juegos "virtuales" de promedio de liga: con pocos L10 la proyección vuelve al promedio
+        const VALUE_EDGE = 0.03;  // edge mínimo para considerar que una cuota tiene valor
+        const toDec = am => am > 0 ? 1 + am / 100 : 1 + 100 / -am;
+        const decToAm = d => d >= 2 ? Math.round((d - 1) * 100) : Math.round(-100 / (d - 1));
+        const isIntLine = x => Math.abs(x - Math.round(x)) < 1e-9;
+        const condProb = r => (1 - (r.push || 0)) > 0 ? r.win / (1 - (r.push || 0)) : 0;
+        const pct1 = x => `${(x * 100).toFixed(1)}%`;
+
+        function poissonPmf(l, max) {
+            const out = [Math.exp(-l)];
+            for (let k = 1; k <= max; k++) out.push(out[k - 1] * l / k);
+            return out;
+        }
+        // Varianza = media + media²/r: las carreras de béisbol se dispersan más que un Poisson
+        function negbinPmf(mean, r, max) {
+            const p = r / (r + mean);
+            const out = [Math.pow(p, r)];
+            for (let k = 1; k <= max; k++) out.push(out[k - 1] * (k - 1 + r) / k * (1 - p));
+            return out;
+        }
+        const normalizePmf = arr => { const s = arr.reduce((a, b) => a + b, 0); return arr.map(v => v / s); };
+
+        // Cuota que el usuario escribió para un mercado (decimal), en americana para el Bank
+        const userDec = (game, key) => { const v = game.mk?.[key]; return Number.isFinite(v) && v > 1 ? v : null; };
+        const userAm = (game, key) => { const d = userDec(game, key); return d ? decToAm(d) : null; };
+
+        // Cuota de DraftKings (o la escrita en el análisis completo) que corresponde a un mercado
+        function bookOddsFor(game, key) {
+            const [kind, rest] = key.split(':');
+            const line = rest === undefined ? null : parseFloat(rest);
+            if (kind === 'ml-A') return game.mlA;
+            if (kind === 'ml-B') return game.mlB;
+            if (kind === 'sp-A' && Number.isFinite(game.spread) && line === game.spread) return game.spreadOddsA;
+            if (kind === 'sp-B' && Number.isFinite(game.spread) && line === -game.spread) return game.spreadOddsB;
+            if (kind === 'tot-o' && line === game.line) return game.overOdds;
+            if (kind === 'tot-u' && line === game.line) return game.underOdds;
+            return null;
+        }
+
+        function shortName(game, team) {
+            const info = teamInfo(game, team);
+            return info.abbr || game[team === 'A' ? 'teamA' : 'teamB'].name || (team === 'A' ? 'Local' : 'Visita');
+        }
+
+        function marketModel(game) {
+            const p = computeProjection(game);
+            const cfg = SPORT_CFG[game.sport] || SPORT_CFG.NBA;
+            const nMin = Math.min(p.a.n, p.b.n);
+            if (!p.hasData) return { ready: false, p, cfg, nMin, markets: [] };
+
+            // Regresión al promedio: pocos juegos L10 -> proyección más cerca del promedio de ambos equipos
+            const avg = (p.a.att + p.a.def + p.b.att + p.b.def) / 4;
+            const w = nMin / (nMin + REG_K);
+            const reg = v => w * v + (1 - w) * avg;
+            const lA = Math.max(0.05, reg(p.projScoreA) + cfg.home / 2);
+            const lB = Math.max(0.05, reg(p.projScoreB) - cfg.home / 2);
+            const attA = reg(p.a.att), defA = reg(p.a.def), attB = reg(p.b.att), defB = reg(p.b.def);
+
+            // Pitágoras (récord esperado por anotación) + Log5 con la ventaja de local de la liga
+            const pyth = (at, df) => at + df <= 0 ? 0.5 : at ** cfg.pyth / (at ** cfg.pyth + df ** cfg.pyth);
+            const pyA = pyth(attA, defA), pyB = pyth(attB, defB);
+            let l5 = (pyA - pyA * pyB) / (pyA + pyB - 2 * pyA * pyB);
+            if (!Number.isFinite(l5)) l5 = 0.5;
+            const ho = cfg.homeWin / (1 - cfg.homeWin);
+            const log5 = l5 * ho / (l5 * ho + 1 - l5);
+
+            let D;
+            if (cfg.kind === 'normal') {
+                const prior = sportSigma[game.sport] || sportSigma.NBA;
+                const played = [...game.teamA.scores, ...game.teamB.scores].filter(isComplete);
+                const sM = blendSigma(prior.margin, played.map(s => s.att - s.def));
+                const sT = blendSigma(prior.total, played.map(s => s.att + s.def));
+                const mu = lA - lB, tot = lA + lB;
+                // P(X > x); con líneas enteras la franja de ±0.5 es push
+                const above = (mean, sd, x) => isIntLine(x)
+                    ? { win: 1 - normCdf((x + 0.5 - mean) / sd), push: normCdf((x + 0.5 - mean) / sd) - normCdf((x - 0.5 - mean) / sd) }
+                    : { win: 1 - normCdf((x - mean) / sd), push: 0 };
+                const winA = 1 - normCdf(-mu / sM);
+                D = {
+                    win: side => side === 'A' ? winA : 1 - winA,
+                    cover: (side, h) => above(side === 'A' ? mu : -mu, sM, -h),
+                    total: t => above(tot, sT, t),
+                    team: (side, t) => above(side === 'A' ? lA : lB, sT * 0.62, t),
+                    tot, mu, sM, sT
+                };
+            } else {
+                const make = l => normalizePmf(cfg.kind === 'poisson' ? poissonPmf(l, cfg.max) : negbinPmf(l, cfg.r, cfg.max));
+                const pa = make(lA), pb = make(lB);
+                let regA = 0, tie = 0, regB = 0;
+                const diff = new Map();
+                const totals = new Array(2 * cfg.max + 2).fill(0);
+                for (let i = 0; i < pa.length; i++) for (let j = 0; j < pb.length; j++) {
+                    const pr = pa[i] * pb[j], d = i - j;
+                    diff.set(d, (diff.get(d) || 0) + pr);
+                    if (d > 0) regA += pr; else if (d < 0) regB += pr; else tie += pr;
+                    // Empate -> prórroga / extra innings: el ganador suma 1 y el margen final es 1
+                    totals[i + j + (d === 0 ? 1 : 0)] += pr;
+                }
+                const ot = Math.max(0.3, Math.min(0.7, 0.5 + (lA / (lA + lB) - 0.5) * 0.6 + (game.sport === 'MLB' ? 0.04 : 0.02)));
+                const settle = (v, pr, acc) => { if (v > 1e-9) acc.win += pr; else if (Math.abs(v) < 1e-9) acc.push += pr; };
+                const tail = (arr, t) => { const acc = { win: 0, push: 0 }; arr.forEach((pr, k) => settle(k - t, pr, acc)); return acc; };
+                D = {
+                    win: side => side === 'A' ? regA + tie * ot : regB + tie * (1 - ot),
+                    cover: (side, h) => {
+                        const acc = { win: 0, push: 0 };
+                        diff.forEach((pr, d) => { if (d !== 0) settle((side === 'A' ? d : -d) + h, pr, acc); });
+                        const pt = side === 'A' ? ot : 1 - ot;
+                        settle(1 + h, tie * pt, acc);
+                        settle(-1 + h, tie * (1 - pt), acc);
+                        return acc;
+                    },
+                    total: t => tail(totals, t),
+                    team: (side, t) => tail(side === 'A' ? pa : pb, t),
+                    reg: { A: regA, D: tie, B: regB },
+                    btts: (1 - pa[0]) * (1 - pb[0]),
+                    tot: lA + lB
+                };
+            }
+
+            // Blend with neutral-site Log5: the home edge is already inside the projected scores
+            const mlA = 0.7 * D.win('A') + 0.3 * l5;
+            const nm = t => shortName(game, t);
+            const markets = [];
+            const add = (group, key, label, r, extra = {}) => {
+                const prob = condProb(r);
+                if (!(prob > 0.005 && prob < 0.995)) return;
+                const own = userDec(game, key);
+                const book = bookOddsFor(game, key);
+                const dec = own ?? (validOdds(book) ? toDec(book) : null);
+                markets.push({
+                    group, key, label, prob, push: r.push || 0, fair: 1 / prob,
+                    dec, src: own ? 'tuya' : dec ? (game.dk?.updatedAt ? 'DK' : 'casa') : null,
+                    edge: dec ? prob - 1 / dec : null, ...extra
+                });
+            };
+
+            add('main', 'ml-A', `${nm('A')} gana (ML)`, { win: mlA }, { market: 'ML', side: 'A' });
+            add('main', 'ml-B', `${nm('B')} gana (ML)`, { win: 1 - mlA }, { market: 'ML', side: 'B' });
+            // Spread / Puck line / Run line: la línea de la casa si existe; si no, ±1.5 (NHL/MLB) o la del modelo
+            const h = Number.isFinite(game.spread) ? game.spread
+                : cfg.kind === 'normal' ? Math.floor(-D.mu) + 0.5 : (mlA >= 0.5 ? -1.5 : 1.5);
+            const spreads = [
+                ['A', h, D.cover('A', h)],
+                ['B', -h, D.cover('B', -h)]
+            ].sort((x, y) => x[1] - y[1]);
+            spreads.forEach(([s, line, r]) => add('main', `sp-${s}:${line}`, `${nm(s)} ${fmtLine(line)}`, r, { market: 'Spread', side: s, line }));
+            const t = Number.isFinite(game.line) ? game.line : Math.floor(D.tot) + 0.5;
+            const over = D.total(t);
+            add('main', `tot-o:${t}`, `Over ${t}`, over, { market: 'Total', side: 'over', line: t });
+            add('main', `tot-u:${t}`, `Under ${t}`, { win: Math.max(0, 1 - over.win - over.push), push: over.push }, { market: 'Total', side: 'under', line: t });
+
+            // Más mercados
+            if (D.reg) {
+                if (game.sport === 'NHL') {
+                    add('more', 'reg-A', `${nm('A')} gana 60 min`, { win: D.reg.A });
+                    add('more', 'reg-D', 'Empate 60 min', { win: D.reg.D });
+                    add('more', 'reg-B', `${nm('B')} gana 60 min`, { win: D.reg.B });
+                }
+            }
+            ['A', 'B'].forEach(s => {
+                const lam = s === 'A' ? lA : lB;
+                const tl = Math.floor(lam) + 0.5;
+                const r = D.team(s, tl);
+                add('more', `tt-${s}-o:${tl}`, `${nm(s)} Over ${tl}`, r);
+                add('more', `tt-${s}-u:${tl}`, `${nm(s)} Under ${tl}`, { win: Math.max(0, 1 - r.win - r.push), push: r.push });
+            });
+            if (D.btts !== undefined) {
+                add('more', 'btts-y', 'Ambos anotan: Sí', { win: D.btts });
+                add('more', 'btts-n', 'Ambos anotan: No', { win: 1 - D.btts });
+            }
+
+            // Pick con valor (cuota conocida y edge real) y la opción más probable de los mercados principales
+            const score = mk => mk.edge + 0.15 * (mk.prob - 0.5);
+            const value = markets.filter(mk => mk.edge !== null && mk.edge >= VALUE_EDGE && mk.prob >= 0.4).sort((x, y) => score(y) - score(x))[0] || null;
+            const safe = markets.filter(mk => mk.group === 'main').sort((x, y) => y.prob - x.prob)[0] || null;
+
+            // Dominio: mejor ataque y mejor defensa a la vez (con un margen mínimo)
+            const gap = avg * 0.03;
+            const dom = attA > attB + gap && defA < defB - gap ? { team: 'A', text: `${nm('A')} domina ataque + defensa` }
+                : attB > attA + gap && defB < defA - gap ? { team: 'B', text: `${nm('B')} domina ataque + defensa` }
+                : attA > attB + gap ? { team: null, text: `${nm('A')} mejor ataque · ${nm(defA < defB ? 'A' : 'B')} mejor defensa` }
+                : attB > attA + gap ? { team: null, text: `${nm('B')} mejor ataque · ${nm(defB < defA ? 'B' : 'A')} mejor defensa` }
+                : null;
+
+            // Lesiones con peso real en la proyección
+            const sevLabel = { out: 'fuera', doubt: 'dudoso', quest: 'en duda' };
+            const injList = ['A', 'B'].flatMap(s => (p.inj[s]?.players || []).map(pl => ({ s, pl, k: pl.impact.off + pl.impact.def })));
+            const adj = injList.filter(x => x.k > 0.005).length;
+            const injChips = injList.filter(x => x.k > 0.005).sort((x, y) => y.k - x.k).slice(0, 4)
+                .map(({ s, pl }) => `${nm(s)} · ${pl.name}${pl.pos ? ` (${pl.pos})` : ''} ${sevLabel[injSeverity(pl.status)]}`);
+
+            return { ready: true, p, cfg, nMin, lA, lB, attA, defA, attB, defB, pyA, pyB, log5, mlA, D, markets, value, safe, dom, adj, injChips };
+        }
+
+        // Monto sugerido: Kelly fraccionado (1/4), máximo 5% del bank.
+        // Sin cuota conocida se calcula con la cuota mínima que deja un edge del 3%.
+        function stakeFor(mk) {
+            if (!mk) return null;
+            const minDec = mk.prob > VALUE_EDGE ? 1 / (mk.prob - VALUE_EDGE) : null;
+            const dec = mk.dec && mk.edge >= VALUE_EDGE ? mk.dec : minDec;
+            if (!dec || dec <= 1) return { minDec, frac: 0 };
+            const kelly = (mk.prob * dec - 1) / (dec - 1);
+            const frac = Math.max(0, Math.min(0.05, kelly / 4));
+            return { minDec, frac: Math.round(frac * 200) / 200, dec };
+        }
+
+        // ======================================================================
+        // ---- Cartelera automática: los juegos del día llegan solos desde ESPN ----
+        // ======================================================================
+        const importFlag = (date, sport) => `sp-import-${date}-${sport}`;
+        const importing = {};
+
+        function maybeAutoImport() {
+            if (!dayReady || viewDate !== todayKey() || sportGames().length) return;
+            let done = false;
+            try { done = localStorage.getItem(importFlag(viewDate, currentSport)) === '1'; } catch (e) {}
+            if (!done) importSlate(currentSport, { auto: true });
+        }
+
+        function setImportStatus(text, kind = 'info') {
+            const el = document.getElementById('import-status');
+            if (!el) return;
+            el.classList.toggle('hidden', !text);
+            el.className = `${text ? '' : 'hidden'} text-xs ${kind === 'error' ? 'text-amber-400' : 'text-gray-400'}`;
+            el.innerText = text || '';
+        }
+
+        async function importSlate(sport = currentSport, { auto = false } = {}) {
+            if (!dayReady || importing[sport]) return;
+            const date = viewDate;
+            importing[sport] = true;
+            setImportStatus(`Buscando los juegos de ${sport} del día...`);
+            try {
+                const [events] = await Promise.all([getScoreboard(sport, date, !auto), getTeams(sport).catch(() => null)]);
+                if (date !== viewDate) return;
+                const sideOf = e => {
+                    const found = teamIndex[sport]?.find(t => String(t.id) === String(e.id));
+                    return { name: e.name, id: e.id, abbr: e.abbr, logo: e.logo || found?.logo || null, color: teamColor(found) || e.color || null, scores: emptyScores() };
+                };
+                const added = [];
+                for (const e of events) {
+                    if (/postponed|canceled|cancelled|suspended/i.test(e.detail || '')) continue;
+                    const exists = games.some(g => g.sport === sport
+                        && ((sameTeam(g.teamA, e.home) && sameTeam(g.teamB, e.away)) || (sameTeam(g.teamA, e.away) && sameTeam(g.teamB, e.home)))
+                        && (!g.dk?.eventId || g.dk.eventId === e.id));
+                    if (exists) continue;
+                    const game = createGame(sport);
+                    game.line = null;
+                    game.start = e.date;
+                    game.dk = { auto: true, eventId: e.id, start: e.date, state: e.state };
+                    game.teamA = sideOf(e.home);
+                    game.teamB = sideOf(e.away);
+                    games.push(game);
+                    added.push(game);
+                }
+                try { localStorage.setItem(importFlag(date, sport), '1'); } catch (e) {}
+                if (!added.length) {
+                    setImportStatus(events.length ? `Los juegos de ${sport} de hoy ya están en la cartelera.` : `No hay juegos de ${sport} programados para este día.`);
+                    renderSlate();
+                    return;
+                }
+                renderSlate();
+                setImportStatus(`Cargando últimos 10, H2H, lesiones y cuotas de ${added.length} ${added.length === 1 ? 'juego' : 'juegos'}...`);
+                await runLimited(added.flatMap(g => [() => autoLoadTeam('A', g, { bulk: true }), () => autoLoadTeam('B', g, { bulk: true })]), 4);
+                if (date !== viewDate) return;
+                await syncOdds();
+                await runLimited(added.map(g => () => loadMatchupContext(g)), 3);
+                if (date !== viewDate) return;
+                setImportStatus('');
+                renderSlate();
+            } catch {
+                setImportStatus(`No se pudieron cargar los juegos de ${sport}. Pulsa "Cargar juegos" para reintentar.`, 'error');
+            } finally {
+                importing[sport] = false;
+            }
+        }
+
+        // ======================================================================
+        // ---- Análisis animado + panel de mercados ----
+        // ======================================================================
+        let anGame = null;
+        let anToken = 0;
+        const anSeen = new Set(); // juegos ya analizados en esta sesión: se abren directo en el panel
+        const sleep = ms => new Promise(r => setTimeout(r, ms));
+        const startOf = game => game.start || game.dk?.start || null;
+        const fmtStart = game => {
+            const st = game.dk?.state;
+            if (st === 'in') return 'EN VIVO';
+            if (st === 'post') return 'FINAL';
+            const s = startOf(game);
+            return s ? new Date(s).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) : '';
+        };
+
+        const SPORT_BALL = {
+            NHL: '<svg viewBox="0 0 64 40" class="w-12 h-8" aria-hidden="true"><ellipse cx="32" cy="24" rx="26" ry="10" fill="#0b0f16"/><rect x="6" y="16" width="52" height="8" fill="#0b0f16"/><ellipse cx="32" cy="16" rx="26" ry="10" fill="#3a4250" stroke="#4ade80" stroke-width="2.5"/><ellipse cx="28" cy="14" rx="12" ry="3.5" fill="#5b6576" opacity=".7"/></svg>',
+            NBA: '<svg viewBox="0 0 40 40" class="w-9 h-9" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#e8772e" stroke="#2a1306" stroke-width="2"/><path d="M3 20h34M20 3v34M8 8c6 6 6 18 0 24M32 8c-6 6-6 18 0 24" stroke="#2a1306" stroke-width="2" fill="none"/></svg>',
+            NFL: '<svg viewBox="0 0 48 32" class="w-11 h-8" aria-hidden="true"><ellipse cx="24" cy="16" rx="21" ry="12" fill="#7a3e1d" stroke="#3b1c0b" stroke-width="2"/><path d="M15 16h18M19 13v6M23 13v6M27 13v6M31 13v6M6 9c2 5 2 9 0 14M42 9c-2 5-2 9 0 14" stroke="#f5f0e8" stroke-width="1.8" fill="none"/></svg>',
+            NCAAF: '<svg viewBox="0 0 48 32" class="w-11 h-8" aria-hidden="true"><ellipse cx="24" cy="16" rx="21" ry="12" fill="#7a3e1d" stroke="#3b1c0b" stroke-width="2"/><path d="M15 16h18M19 13v6M23 13v6M27 13v6M31 13v6M6 9c2 5 2 9 0 14M42 9c-2 5-2 9 0 14" stroke="#f5f0e8" stroke-width="1.8" fill="none"/></svg>',
+            MLB: '<svg viewBox="0 0 40 40" class="w-9 h-9" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="#f4f1ea" stroke="#c9c2b4" stroke-width="1.5"/><path d="M9 7c5 7 5 19 0 26M31 7c-5 7-5 19 0 26" stroke="#d6312f" stroke-width="1.8" fill="none" stroke-dasharray="2.5 2"/></svg>'
+        };
+
+        function openAnalysis(id) {
+            const game = games.find(g => g.id === id);
+            if (!game) return;
+            anGame = game;
+            const ov = document.getElementById('an-overlay');
+            ov.classList.remove('hidden');
+            ov.scrollTop = 0;
+            document.body.classList.add('overflow-hidden');
+            if (!history.state?.anModal) history.pushState({ anModal: true }, '');
+            ensureGameData(game);
+            if (anSeen.has(game.id)) showAnalysisPanel();
+            else runAnalysis(game);
+        }
+
+        function closeAnalysis({ fromHistory = false } = {}) {
+            const ov = document.getElementById('an-overlay');
+            if (ov.classList.contains('hidden')) return;
+            anToken++;
+            ov.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+            anGame = null;
+            if (!fromHistory && history.state?.anModal) history.back();
+        }
+        window.addEventListener('popstate', () => closeAnalysis({ fromHistory: true }));
+
+        function openFullAnalysis() {
+            const id = anGame?.id;
+            closeAnalysis();
+            if (id) setTimeout(() => openGame(id), 60);
+        }
+
+        function ensureGameData(game) {
+            ['A', 'B'].forEach(t => {
+                const team = game[t === 'A' ? 'teamA' : 'teamB'];
+                if (team.name && !team.scores.some(isComplete) && loadStatus[`${game.id}-${t}`]?.state !== 'loading') autoLoadTeam(t, game);
+            });
+            loadMatchupContext(game);
+        }
+
+        const teamLoading = game => ['A', 'B'].some(t => loadStatus[`${game.id}-${t}`]?.state === 'loading');
+        const ctxLoading = game => !!(ctxStatus[game.id]?.h2h === 'loading' || ctxStatus[game.id]?.inj === 'loading');
+
+        function analysisLines(game, m) {
+            const A = shortName(game, 'A'), B = shortName(game, 'B');
+            if (!m.ready) {
+                return [`Sincronizando últimos 10 de ${A} y ${B}`, 'Faltan resultados L10 para proyectar este juego'];
+            }
+            const d = m.cfg.kind === 'normal' ? 1 : 2;
+            const p = m.p;
+            const modelLine = m.cfg.kind === 'normal'
+                ? `Normal · margen ${fmtSigned(m.D.mu)} ±${m.D.sM.toFixed(1)} · total ${m.D.tot.toFixed(1)}`
+                : `${m.cfg.model} ${m.lA.toFixed(2)}–${m.lB.toFixed(2)} ${m.cfg.unit} · total ${m.D.tot.toFixed(2)}`;
+            const lines = [
+                `Sincronizando L10 · ${A} ${p.a.n} + ${B} ${p.b.n} juegos${p.h2h ? ` · H2H ${p.h2h.n}` : ''}`,
+                `Ataque/defensa · ${A} ${m.attA.toFixed(d)}/${m.defA.toFixed(d)} · ${B} ${m.attB.toFixed(d)}/${m.defB.toFixed(d)}`,
+                `Leyendo noticias y lesiones · ${m.adj} ${m.adj === 1 ? 'ajuste activo' : 'ajustes activos'}`,
+                `Pitágoras ${pct1(m.pyA)} vs ${pct1(m.pyB)}`,
+                `Log5 + ventaja local ${Math.round(m.cfg.homeWin * 100)}% → ${A} ${pct1(m.log5)}`,
+                modelLine,
+                `Escaneando ${m.markets.length} mercados · buscando valor`,
+                m.dom?.team ? `Dominio detectado: ${shortName(game, m.dom.team)}` : 'Sin dominio claro · partido parejo'
+            ];
+            if (m.value) lines.push(`Valor encontrado: ${m.value.label} · edge +${(m.value.edge * 100).toFixed(1)}%`);
+            return lines;
+        }
+
+        function renderAnalysisStage(game) {
+            const sport = game.sport;
+            document.getElementById('an-run').innerHTML = `
+                <div class="an-stage">
+                    <div class="an-fallback" aria-hidden="true">
+                        <span class="an-ring"></span><span class="an-ring an-ring-2"></span><span class="an-scan"></span>
+                        <img src="${leagueLogo(sport)}" alt="" class="an-league" onerror="this.remove()">
+                    </div>
+                    <img src="/mascots/${sport.toLowerCase()}.png" alt="Mascota de Sport Picks analizando" class="an-mascot" onload="this.classList.add('is-ready')" onerror="this.remove()">
+                    <div class="an-match"><span>${escapeHtml(shortName(game, 'A'))}</span><small>vs</small><span>${escapeHtml(shortName(game, 'B'))}</span></div>
+                </div>
+                <div class="an-progress"><span id="an-bar" style="width:0%"></span></div>
+                <div id="an-lines" class="an-lines" aria-live="polite"></div>
+                <div class="flex justify-center pt-2 pb-1">
+                    <button onclick="skipAnalysis()" class="an-skip">SALTAR ▸</button>
+                </div>`;
+            document.getElementById('an-run').classList.remove('hidden');
+            document.getElementById('an-panel').classList.add('hidden');
+        }
+
+        function pushAnLine(text, cls = '') {
+            const box = document.getElementById('an-lines');
+            if (!box) return;
+            const el = document.createElement('div');
+            el.className = `an-line ${cls}`;
+            el.textContent = text;
+            box.appendChild(el);
+        }
+
+        async function runAnalysis(game) {
+            const tok = ++anToken;
+            const alive = () => tok === anToken && anGame === game;
+            renderAnalysisStage(game);
+            const bar = () => document.getElementById('an-bar');
+            pushAnLine('Conectando con ESPN y DraftKings...', 'an-wait');
+            // Espera los datos (máx. 12 s): últimos 10, luego H2H y lesiones
+            const t0 = Date.now();
+            while (alive() && Date.now() - t0 < 12000 && (teamLoading(game) || (ctxLoading(game) && Date.now() - t0 < 4000))) {
+                if (bar()) bar().style.width = `${Math.min(18, (Date.now() - t0) / 120)}%`;
+                await sleep(200);
+            }
+            if (!alive()) return;
+            document.querySelector('#an-lines .an-wait')?.remove();
+            const m = marketModel(game);
+            const lines = analysisLines(game, m);
+            for (let i = 0; i < lines.length; i++) {
+                if (!alive()) return;
+                pushAnLine(lines[i]);
+                if (bar()) bar().style.width = `${18 + (i + 1) / lines.length * 80}%`;
+                await sleep(430);
+            }
+            if (!alive()) return;
+            if (bar()) bar().style.width = '100%';
+            pushAnLine(m.ready ? '✓ ANÁLISIS COMPLETO' : '⚠ ANÁLISIS INCOMPLETO', m.ready ? 'an-done' : 'an-warn');
+            anSeen.add(game.id);
+            await sleep(900);
+            if (alive()) showAnalysisPanel();
+        }
+
+        function skipAnalysis() {
+            anToken++;
+            if (anGame) anSeen.add(anGame.id);
+            showAnalysisPanel();
+        }
+
+        function showAnalysisPanel() {
+            document.getElementById('an-run').classList.add('hidden');
+            document.getElementById('an-panel').classList.remove('hidden');
+            renderAnalysisPanel();
+        }
+
+        function marketRow(mk, top) {
+            const pctTxt = `${(mk.prob * 100).toFixed(1)}%`;
+            const edgeTxt = mk.edge === null ? '' : ` · <span class="${mk.edge >= VALUE_EDGE ? 'text-emerald-400' : mk.edge >= 0 ? 'text-gray-400' : 'text-rose-400'}" title="Edge contra la cuota">${mk.edge >= 0 ? '+' : '−'}${Math.abs(mk.edge * 100).toFixed(1)}%</span>`;
+            return `
+                <div class="mk-row ${top ? 'is-top' : ''}">
+                    <div class="min-w-0">
+                        <span class="mk-label">${escapeHtml(mk.label)}</span>
+                        <span class="mk-fair">justa ${mk.fair.toFixed(2)}${edgeTxt}</span>
+                    </div>
+                    <div class="mk-bar"><span style="width:${Math.max(3, mk.prob * 100)}%"></span></div>
+                    <div class="mk-pct">${pctTxt}</div>
+                    <button class="mk-odds" data-key="${escapeHtml(mk.key)}" onclick="editOdds(this)" title="Escribe la cuota de tu casa (decimal 1.85 o americana -150)">
+                        ${mk.dec ? `${mk.dec.toFixed(2)}<small>${mk.src}</small>` : 'cuota'}
+                    </button>
+                </div>`;
+        }
+
+        function renderAnalysisPanel() {
+            const game = anGame;
+            const el = document.getElementById('an-panel');
+            if (!game || !el || el.classList.contains('hidden')) return;
+            if (el.contains(document.activeElement) && document.activeElement.tagName === 'INPUT') return; // no interrumpir mientras escribe una cuota
+            const m = marketModel(game);
+            const A = escapeHtml(shortName(game, 'A')), B = escapeHtml(shortName(game, 'B'));
+            const d = m.cfg.kind === 'normal' ? 1 : 2;
+            const head = `
+                <div class="grid grid-cols-[1fr_auto_1fr] items-start gap-2">
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2">${crest(teamInfo(game, 'A'), 'w-9 h-9', 'text-xs')}<span class="mk-team">${A}</span></div>
+                        <span class="mk-side">Local</span>
+                    </div>
+                    <span class="pt-3 font-cond text-gray-400 text-lg">VS</span>
+                    <div class="min-w-0 text-right">
+                        <div class="flex items-center justify-end gap-2"><span class="mk-team">${B}</span>${crest(teamInfo(game, 'B'), 'w-9 h-9', 'text-xs')}</div>
+                        <span class="mk-side">Visita</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between gap-2 mt-3 text-[15px] text-gray-300">
+                    <span>${fmtStart(game)}</span>
+                    <span class="text-right">${m.ready ? `Proy ${m.lA.toFixed(d)} – ${m.lB.toFixed(d)} · Total ${m.D.tot.toFixed(d)}` : 'Sin proyección'}</span>
+                </div>`;
+            if (!m.ready) {
+                const loading = teamLoading(game);
+                el.innerHTML = `${head}
+                    <p class="mt-6 text-sm text-gray-400">${loading ? 'Cargando los últimos 10 partidos de cada equipo...' : 'Faltan resultados L10 de uno de los equipos. Ábrelo en el análisis completo para cargarlos o escribirlos a mano.'}</p>
+                    <button onclick="openFullAnalysis()" class="mt-5 w-full mk-cta">Ver análisis completo ▸</button>`;
+                return;
+            }
+            const main = m.markets.filter(mk => mk.group === 'main');
+            const more = m.markets.filter(mk => mk.group === 'more');
+            const topKey = (m.value || m.safe)?.key;
+            const moreTitle = game.sport === 'NHL' ? 'Más mercados (60 min · totales por equipo · ambos anotan)'
+                : game.sport === 'MLB' ? 'Más mercados (totales por equipo · ambos anotan)' : 'Más mercados (totales por equipo)';
+            const pick = m.value || m.safe;
+            const st = stakeFor(pick);
+            const pickBox = m.value ? `
+                <div class="mk-pick is-value">
+                    <div class="min-w-0">
+                        <span class="mk-kicker text-emerald-300">Valor detectado · edge +${(m.value.edge * 100).toFixed(1)}%</span>
+                        <span class="mk-pick-label">${escapeHtml(m.value.label)}</span>
+                        <span class="text-xs text-gray-400">Cuota ${m.value.dec.toFixed(2)} (${fmtOdds(decToAm(m.value.dec))}) · justa ${m.value.fair.toFixed(2)}</span>
+                    </div>
+                    <span class="mk-pick-pct">${(m.value.prob * 100).toFixed(1)}%</span>
+                </div>` : `
+                <div class="mk-pick">
+                    <div class="min-w-0">
+                        <span class="mk-kicker text-sky-300">Sin ventaja clara · <span class="normal-case tracking-[0.12em]">opción más segura</span></span>
+                        <span class="mk-pick-label">${escapeHtml(m.safe.label)}</span>
+                    </div>
+                    <span class="mk-pick-pct">${(m.safe.prob * 100).toFixed(1)}%</span>
+                </div>`;
+            const bank = parseFloat(document.getElementById('bank-amount')?.value);
+            const money = Number.isFinite(bank) && bank > 0 && st?.frac ? ` · $${(bank * st.frac).toFixed(2)}` : '';
+            const stakeBox = st && st.minDec ? `
+                <div class="mk-stake">
+                    <div class="min-w-0">
+                        <span class="block text-[15px] text-gray-100 uppercase tracking-wide">Apuesta sugerida · ${m.value ? 'con valor' : 'solo con valor'}</span>
+                        <span class="block text-[13px] text-gray-400 mt-0.5">Modelo ${(pick.prob * 100).toFixed(1)}% · ${m.value ? `Kelly 1/4 con cuota ${m.value.dec.toFixed(2)}` : `juégala solo si tu casa paga ${st.minDec.toFixed(2)} (${fmtOdds(decToAm(st.minDec))}) o más`}</span>
+                    </div>
+                    <span class="mk-stake-amt">${st.frac ? `${(st.frac * 100).toFixed(st.frac * 100 % 1 ? 1 : 0)}% del bank${money}` : 'No jugar'}</span>
+                </div>` : '';
+            const chips = [
+                m.dom ? `<span class="mk-chip ${m.dom.team ? 'is-green' : ''}">${escapeHtml(m.dom.text)}</span>` : '',
+                ...m.injChips.map(c => `<span class="mk-chip">${escapeHtml(c)}</span>`),
+                m.p.h2h ? `<span class="mk-chip">H2H · ${m.p.h2h.n} ${m.p.h2h.n === 1 ? 'juego' : 'juegos'}</span>` : ''
+            ].join('');
+            el.innerHTML = `${head}
+                <div class="mt-4 space-y-3">${main.map(mk => marketRow(mk, mk.key === topKey)).join('')}</div>
+                ${more.length ? `
+                <details class="mt-4 group">
+                    <summary class="mk-more">${moreTitle}</summary>
+                    <div class="mt-3 space-y-3">${more.map(mk => marketRow(mk, mk.key === topKey)).join('')}</div>
+                </details>` : ''}
+                <div class="mt-5 space-y-3">${pickBox}${stakeBox}</div>
+                ${chips ? `<div class="flex flex-wrap gap-2 mt-4">${chips}</div>` : ''}
+                <div class="grid grid-cols-2 gap-2 mt-5">
+                    <button onclick="openFullAnalysis()" class="mk-cta">Análisis completo</button>
+                    <button onclick="refreshAnalysis()" class="mk-cta">Actualizar datos</button>
+                </div>
+                <p class="mt-4 text-[11px] leading-relaxed text-gray-500">Toca <strong class="text-gray-300">cuota</strong> y escribe la de tu casa (decimal como 1.85 o americana como -150) para medir el edge. Las cuotas DK se cargan solas cuando DraftKings publica la línea. Ningún pick es seguro: apuesta con responsabilidad.</p>`;
+        }
+
+        function editOdds(btn) {
+            const key = btn.dataset.key;
+            const cur = anGame?.mk?.[key];
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.inputMode = 'decimal';
+            input.className = 'mk-odds mk-odds-input';
+            input.placeholder = '1.85';
+            input.value = cur ? cur.toFixed(2) : '';
+            input.setAttribute('aria-label', 'Cuota de tu casa');
+            btn.replaceWith(input);
+            input.focus();
+            let done = false;
+            const commit = () => { if (done) return; done = true; setMarketOdds(key, input.value); };
+            input.addEventListener('blur', commit);
+            input.addEventListener('keydown', e => { if (e.key === 'Enter') input.blur(); if (e.key === 'Escape') { input.value = cur ? String(cur) : ''; input.blur(); } });
+        }
+
+        function parseOddsInput(str) {
+            const s = String(str || '').trim().replace(',', '.').replace(/[−–]/g, '-');
+            if (!s) return null;
+            if (/^even$/i.test(s)) return 2;
+            const n = parseFloat(s);
+            if (!Number.isFinite(n)) return undefined;
+            if (Math.abs(n) >= 100) return toDec(Math.round(n));
+            if (n > 1.005 && n < 100) return Math.round(n * 1000) / 1000;
+            return undefined;
+        }
+
+        function setMarketOdds(key, raw) {
+            const game = anGame;
+            if (!game) return;
+            const dec = parseOddsInput(raw);
+            if (dec === undefined) { renderAnalysisPanel(); return; }
+            game.mk ||= {};
+            if (dec === null) delete game.mk[key]; else game.mk[key] = dec;
+            renderSlate();
+            renderAnalysisPanel();
+        }
+
+        function refreshAnalysis() {
+            const game = anGame;
+            if (!game) return;
+            ['A', 'B'].forEach(t => autoLoadTeam(t, game, { bulk: true }));
+            loadMatchupContext(game, { fresh: true });
+            syncOdds({ only: game, fresh: true });
+            const el = document.getElementById('an-panel');
+            el.querySelector('.mk-cta:last-child')?.replaceChildren(document.createTextNode('Actualizando...'));
         }
 
         // ---- Service worker: app shell cache and offline fallback ----

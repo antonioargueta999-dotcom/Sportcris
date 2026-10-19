@@ -214,10 +214,10 @@
         }
         .an-card { background: #ffffff; color: #0b1220; border-radius: 1.9rem; padding: 1.4rem 1.4rem 1.2rem; box-shadow: 0 30px 60px -20px rgba(0,0,0,.85); }
         .an-stage {
-            position: relative; aspect-ratio: 1 / 0.93; background-color: #fff; border-radius: 1.3rem; overflow: hidden;
+            position: relative; aspect-ratio: 1 / 1; max-height: 50vh; width: 100%; background-color: #fff; border-radius: 1.3rem; overflow: hidden;
             background: radial-gradient(circle at 50% 42%, #ffffff 0%, #eef2f8 55%, #dfe6f1 100%);
         }
-        .an-mascot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; opacity: 0; transition: opacity .4s; }
+        .an-mascot { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity .4s; }
         .an-mascot.is-ready { opacity: 1; }
         .an-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
         .an-league { width: 34%; height: 34%; object-fit: contain; filter: drop-shadow(0 12px 18px rgba(30,50,90,.25)); animation: an-float 3s ease-in-out infinite; }
@@ -4028,7 +4028,7 @@
                         <span class="an-ring"></span><span class="an-ring an-ring-2"></span><span class="an-scan"></span>
                         <img src="${leagueLogo(sport)}" alt="" class="an-league" onerror="this.remove()">
                     </div>
-                    <img src="/mascots/${sport.toLowerCase()}.png" alt="Mascota de Sport Picks analizando" class="an-mascot" onload="this.classList.add('is-ready')" onerror="this.remove()">
+                    <img src="/mascots/${sport.toLowerCase()}.jpg" alt="Mascota de Sport Picks analizando" class="an-mascot" onload="this.classList.add('is-ready')" onerror="this.remove()">
                     <div class="an-match"><span>${escapeHtml(shortName(game, 'A'))}</span><small>vs</small><span>${escapeHtml(shortName(game, 'B'))}</span></div>
                 </div>
                 <div class="an-progress"><span id="an-bar" style="width:0%"></span></div>

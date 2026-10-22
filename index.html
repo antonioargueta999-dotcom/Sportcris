@@ -2968,55 +2968,32 @@
         }
 
         function gamePickCandidates(game) {
-            // Same probabilities as the market panel (Poisson / binomial negativa / normal by sport)
+            // Same probabilities as the market panel: model blended with the bookmaker's no-vig line.
+            // A pick needs a real price (DraftKings or typed by the user); without one there is no confirmed value.
             const m = marketModel(game);
             if (!m.ready || m.nMin < MIN_GAMES) return [];
             const p = m.p;
-
             const nameA = game.teamA.name || 'Local';
             const nameB = game.teamB.name || 'Visitante';
             const matchup = `${nameB} @ ${nameA}`;
-            const out = [];
-            // side: 'A' | 'B' | 'over' | 'under'; line: spread or total used to settle the pick
-            const add = (market, label, prob, odds, side = null, line = null) => {
-                // What the head to head says about this exact pick, blended in as a light prior
-                const h2h = h2hRecord(game, market, side, line);
-                if (h2h.n >= 3) {
-                    const k = 0.12 * Math.min(h2h.n, 8) / 8;
-                    prob = (1 - k) * prob + k * h2h.rate;
-                }
-                const implied = validOdds(odds) ? impliedProb(odds) : (market === 'ML' ? null : STD_IMPLIED);
-                const edge = implied === null ? null : prob - implied;
-                // Keep picks with real value, or ML favorites without odds that the model clearly likes
-                if (edge !== null ? edge < 0.02 : prob < 0.55) return;
-                out.push({
-                    gameId: game.id, sport: game.sport, matchup, market, label, prob, edge, side, line, h2h,
-                    injShift: side === 'A' ? p.inj.shift : side === 'B' ? -p.inj.shift : side === 'over' ? p.inj.totalShift : -p.inj.totalShift,
-                    injThr: p.inj.thr,
-                    crests: side === 'A' || side === 'B' ? [teamInfo(game, side)] : [teamInfo(game, 'B'), teamInfo(game, 'A')],
-                    odds: validOdds(odds) ? odds : (market === 'ML' ? null : -110),
-                    score: prob * 100 + (edge ?? 0) * 100
+            const name = side => side === 'A' ? nameA : nameB;
+            return m.markets
+                .filter(mk => mk.group === 'main' && !mk.noPick && mk.edge !== null && mk.edge >= 0.02)
+                .map(mk => {
+                    const { market, side, line, prob, edge } = mk;
+                    const label = market === 'ML' ? `${name(side)} ML`
+                        : market === 'Spread' ? `${name(side)} ${fmtLine(line)}`
+                        : `${side === 'over' ? 'Over' : 'Under'} ${line}`;
+                    return {
+                        gameId: game.id, sport: game.sport, matchup, market, label, prob, edge, side, line,
+                        h2h: h2hRecord(game, market, side, line),
+                        injShift: side === 'A' ? p.inj.shift : side === 'B' ? -p.inj.shift : side === 'over' ? p.inj.totalShift : -p.inj.totalShift,
+                        injThr: p.inj.thr,
+                        crests: side === 'A' || side === 'B' ? [teamInfo(game, side)] : [teamInfo(game, 'B'), teamInfo(game, 'A')],
+                        odds: decToAm(mk.dec),
+                        score: prob * 100 + edge * 100
+                    };
                 });
-            };
-
-            // The bettor's own odds (typed in the market panel) win over DraftKings / manual ones
-            const priceOf = (key, book) => userAm(game, key) ?? book;
-            add('ML', `${nameA} ML`, m.mlA, priceOf('ml-A', game.mlA), 'A');
-            add('ML', `${nameB} ML`, 1 - m.mlA, priceOf('ml-B', game.mlB), 'B');
-
-            if (Number.isFinite(game.spread)) {
-                const s = game.spread;
-                add('Spread', `${nameA} ${fmtLine(s)}`, condProb(m.D.cover('A', s)), priceOf(`sp-A:${s}`, game.spreadOddsA), 'A', s);
-                add('Spread', `${nameB} ${fmtLine(-s)}`, condProb(m.D.cover('B', -s)), priceOf(`sp-B:${-s}`, game.spreadOddsB), 'B', -s);
-            }
-            if (Number.isFinite(game.line)) {
-                const t = game.line;
-                const over = m.D.total(t);
-                const under = { win: Math.max(0, 1 - over.win - over.push), push: over.push };
-                add('Total', `Over ${t}`, condProb(over), priceOf(`tot-o:${t}`, game.overOdds), 'over', t);
-                add('Total', `Under ${t}`, condProb(under), priceOf(`tot-u:${t}`, game.underOdds), 'under', t);
-            }
-            return out;
         }
 
         // Bank picks mix every sport of the day; only candidates with a real, priced edge qualify
@@ -3678,6 +3655,11 @@
         };
         const REG_K = 4;          // juegos "virtuales" de promedio de liga: con pocos L10 la proyección vuelve al promedio
         const VALUE_EDGE = 0.03;  // edge mínimo para considerar que una cuota tiene valor
+        // La auditoría del 1-21 oct mostró que la línea de la casa predice mejor que el modelo solo:
+        // la probabilidad final es 70% casa (sin comisión) + 30% modelo cuando hay cuota.
+        const MARKET_W = 0.7;
+        // Totales de NBA y NCAAF: el modelo predijo peor que la línea; se muestran solo como referencia
+        const NO_PICK_TOTALS = new Set(['NBA', 'NCAAF']);
         const toDec = am => am > 0 ? 1 + am / 100 : 1 + 100 / -am;
         const decToAm = d => d >= 2 ? Math.round((d - 1) * 100) : Math.round(-100 / (d - 1));
         const isIntLine = x => Math.abs(x - Math.round(x)) < 1e-9;
@@ -3805,10 +3787,11 @@
                 const own = userDec(game, key);
                 const book = bookOddsFor(game, key);
                 const dec = own ?? (validOdds(book) ? toDec(book) : null);
+                const isTotal = /^(tot|tt)-/.test(key);
                 markets.push({
-                    group, key, label, prob, push: r.push || 0, fair: 1 / prob,
+                    group, key, label, prob, model: prob, mkt: null, push: r.push || 0,
                     dec, src: own ? 'tuya' : dec ? (game.dk?.updatedAt ? 'DK' : 'casa') : null,
-                    edge: dec ? prob - 1 / dec : null, ...extra
+                    noPick: isTotal && NO_PICK_TOTALS.has(game.sport), ...extra
                 });
             };
 
@@ -3848,9 +3831,31 @@
             }
 
             // Pick con valor (cuota conocida y edge real) y la opción más probable de los mercados principales
+            // Probabilidad de la casa sin comisión, por grupo de resultados que se excluyen entre sí
+            const groupOf = mk => /^ml-/.test(mk.key) ? 'ml' : /^sp-/.test(mk.key) ? 'sp' : /^tot-/.test(mk.key) ? 'tot'
+                : /^reg-/.test(mk.key) ? 'reg' : /^btts-/.test(mk.key) ? 'btts' : mk.key.replace(/-[ou]:.*$/, '');
+            const groups = {};
+            markets.forEach(mk => (groups[groupOf(mk)] ||= []).push(mk));
+            Object.values(groups).forEach(list => {
+                const priced = list.filter(mk => mk.dec);
+                if (!priced.length) return;
+                const sum = priced.reduce((a, mk) => a + 1 / mk.dec, 0);
+                priced.forEach(mk => {
+                    // Con todas las cuotas del grupo se quita la comisión exacta; con una sola se resta una comisión típica
+                    const fair = priced.length === list.length ? (1 / mk.dec) / sum : Math.max(0.01, 1 / mk.dec - 0.0225 * (list.length - 1));
+                    mk.mkt = Math.min(0.99, fair);
+                });
+            });
+            markets.forEach(mk => {
+                mk.prob = mk.mkt === null ? mk.model : MARKET_W * mk.mkt + (1 - MARKET_W) * mk.model;
+                mk.fair = 1 / mk.prob;
+                mk.edge = mk.dec ? mk.prob - 1 / mk.dec : null;
+            });
+            const blended = markets.some(mk => mk.group === 'main' && mk.mkt !== null);
+
             const score = mk => mk.edge + 0.15 * (mk.prob - 0.5);
-            const value = markets.filter(mk => mk.edge !== null && mk.edge >= VALUE_EDGE && mk.prob >= 0.4).sort((x, y) => score(y) - score(x))[0] || null;
-            const safe = markets.filter(mk => mk.group === 'main').sort((x, y) => y.prob - x.prob)[0] || null;
+            const value = markets.filter(mk => !mk.noPick && mk.edge !== null && mk.edge >= VALUE_EDGE && mk.prob >= 0.4).sort((x, y) => score(y) - score(x))[0] || null;
+            const safe = markets.filter(mk => mk.group === 'main' && !mk.noPick).sort((x, y) => y.prob - x.prob)[0] || null;
 
             // Dominio: mejor ataque y mejor defensa a la vez (con un margen mínimo)
             const gap = avg * 0.03;
@@ -3867,7 +3872,7 @@
             const injChips = injList.filter(x => x.k > 0.005).sort((x, y) => y.k - x.k).slice(0, 4)
                 .map(({ s, pl }) => `${nm(s)} · ${pl.name}${pl.pos ? ` (${pl.pos})` : ''} ${sevLabel[injSeverity(pl.status)]}`);
 
-            return { ready: true, p, cfg, nMin, lA, lB, attA, defA, attB, defB, pyA, pyB, log5, mlA, D, markets, value, safe, dom, adj, injChips };
+            return { ready: true, p, cfg, nMin, lA, lB, attA, defA, attB, defB, pyA, pyB, log5, mlA, D, markets, value, safe, dom, adj, injChips, blended };
         }
 
         // Monto sugerido: Kelly fraccionado (1/4), máximo 5% del bank.
@@ -4037,6 +4042,7 @@
                 `Pitágoras ${pct1(m.pyA)} vs ${pct1(m.pyB)}`,
                 `Log5 + ventaja local ${Math.round(m.cfg.homeWin * 100)}% → ${A} ${pct1(m.log5)}`,
                 modelLine,
+                ...(m.blended ? [`Ajustando con la línea de la casa · ${Math.round(MARKET_W * 100)}% casa + ${Math.round((1 - MARKET_W) * 100)}% modelo`] : ['Sin cuotas de la casa · solo modelo, sin valor confirmado']),
                 `Escaneando ${m.markets.length} mercados · buscando valor`,
                 m.dom?.team ? `Dominio detectado: ${shortName(game, m.dom.team)}` : 'Sin dominio claro · partido parejo'
             ];
@@ -4123,6 +4129,8 @@
                     <div class="min-w-0">
                         <span class="mk-label">${escapeHtml(mk.label)}</span>
                         <span class="mk-fair">justa ${fmtDecOdds(mk.fair)}${edgeTxt}</span>
+                        ${mk.mkt !== null ? `<span class="mk-fair">modelo ${Math.round(mk.model * 100)}% · casa ${Math.round(mk.mkt * 100)}%</span>` : ''}
+                        ${mk.noPick ? '<span class="mk-fair text-amber-400">solo referencia</span>' : ''}
                     </div>
                     <div class="mk-bar"><span style="width:${Math.max(3, mk.prob * 100)}%"></span></div>
                     <div class="mk-pct">${pctTxt}</div>
@@ -4221,7 +4229,7 @@
                     <button onclick="openFullAnalysis()" class="mk-cta">Análisis completo</button>
                     <button onclick="refreshAnalysis()" class="mk-cta">Actualizar datos</button>
                 </div>
-                <p class="mt-4 text-[11px] leading-relaxed text-gray-500">Toca <strong class="text-gray-300">cuota</strong> y escribe la de tu casa, en americana (-150, +130) o decimal (1.67, 2.30); el sistema reconoce el formato solo y mide el edge. Las cuotas DK se cargan solas cuando DraftKings publica la línea. Ningún pick es seguro: apuesta con responsabilidad.</p>`;
+                <p class="mt-4 text-[11px] leading-relaxed text-gray-500">Toca <strong class="text-gray-300">cuota</strong> y escribe la de tu casa, en americana (-150, +130) o decimal (1.67, 2.30); el sistema reconoce el formato solo y mide el edge. Con cuota, la probabilidad combina la casa sin comisión (70%) y el modelo (30%); sin cuota no se marca valor. Los totales de NBA y NCAAF son solo referencia. Las cuotas DK se cargan solas cuando DraftKings publica la línea. Ningún pick es seguro: apuesta con responsabilidad.</p>`;
         }
 
         function editOdds(btn) {

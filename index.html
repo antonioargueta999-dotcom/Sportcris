@@ -271,6 +271,24 @@
         .mk-stake-amt { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.45rem; color: #fb7185; text-align: right; }
         .mk-chip { font-size: 13px; padding: .3rem .75rem; border-radius: 9999px; border: 1px solid rgba(140, 160, 190, .35); color: #b6c2d4; background: rgba(255,255,255,.02); }
         .mk-chip.is-green { border-color: rgba(52, 211, 153, .55); color: #6ee7b7; background: rgba(16, 185, 129, .08); }
+        .pl-card { border-radius: 1.4rem; padding: 1.1rem; background: linear-gradient(165deg, #121b2a, #0c121d); border: 1px solid rgba(110, 130, 160, 0.3); }
+        .pl-card.is-hot { border-color: rgba(251, 146, 60, .55); background: linear-gradient(165deg, rgba(70, 28, 12, .55), #0c121d 60%); }
+        .pl-card.is-cold { border-color: rgba(125, 211, 252, .4); background: linear-gradient(165deg, rgba(12, 40, 60, .55), #0c121d 60%); }
+        .pl-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.35rem; color: #f1f5fb; text-transform: uppercase; letter-spacing: .03em; }
+        .pl-badge { flex: none; font-size: 11px; font-weight: 700; padding: .25rem .6rem; border-radius: 9999px; border: 1px solid; }
+        .pl-badge.is-hot { color: #fdba74; border-color: rgba(251, 146, 60, .6); background: rgba(251, 146, 60, .12); }
+        .pl-badge.is-cold { color: #7dd3fc; border-color: rgba(125, 211, 252, .5); background: rgba(125, 211, 252, .08); }
+        .pl-stat { border-radius: .8rem; padding: .5rem .6rem; background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.07); }
+        .pl-stat span { display: block; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #8a96aa; font-family: 'Barlow Condensed', sans-serif; }
+        .pl-stat strong { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 1.25rem; color: #fff; }
+        .pl-leg { width: 100%; display: flex; align-items: center; gap: .6rem; text-align: left; padding: .6rem .7rem; border-radius: .9rem; background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.07); transition: border-color .2s; }
+        .pl-leg:hover { border-color: rgba(255,255,255,.25); }
+        .pl-leg.is-fire { border-color: rgba(251, 146, 60, .45); }
+        .pl-leg.is-ice { border-color: rgba(125, 211, 252, .45); }
+        .pl-leg.is-fire.is-ice { border-color: rgba(196, 181, 253, .45); }
+        .pl-icons { width: 2.6rem; flex: none; font-size: 1.15rem; text-align: center; }
+        .pl-leg-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; color: #f1f5fb; }
+        .pl-leg-pct { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; color: #fff; }
         .mk-fmt-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: #8a96aa; }
         .mk-fmt { display: inline-flex; padding: 3px; gap: 3px; border-radius: 9999px; background: #070b12; border: 1px solid rgba(140, 160, 190, .35); }
         .mk-fmt button { padding: .3rem .8rem; border-radius: 9999px; font-size: 13px; color: #9fb0c8; }
@@ -342,6 +360,12 @@
                 <i data-lucide="shield-check" class="w-4 h-4"></i>
                 <span class="hidden sm:inline">Picks Bank</span>
                 <span id="picks-btn-count" class="hidden min-w-[1.25rem] px-1 py-0.5 rounded-md bg-black/25 text-[10px] leading-none text-white"></span>
+            </button>
+
+            <!-- Parlays del día: 2 combinadas de 6 picks -->
+            <button onclick="openParlays()" title="Parlays del día" class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-b from-orange-400 to-rose-600 hover:brightness-110 text-[#1f0905] shadow-lg shadow-orange-500/20 transition">
+                <span aria-hidden="true">🔥</span>
+                <span class="hidden sm:inline">Parlays</span>
             </button>
 
             <!-- Reto Escalera: de $10 a $1000 con un pick sólido por día -->
@@ -524,7 +548,31 @@
                 </div>
                 <div id="picks-tabs" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
                 <div id="picks-grid" class="grid grid-cols-1 gap-4"></div>
-                <p class="text-[11px] text-gray-500">El Bank junta los juegos de todos los deportes del día y solo incluye picks con edge real (Lock ≥4%, Semi Lock ≥3%, Lotto ≥5%); los ML sin cuota no entran. La confianza sale del modelo L10 (proyección de marcador y su dispersión histórica), reducida cuando hay pocos juegos cargados. Lock y Semi Lock usan como máximo un pick por juego. Ningún pick es seguro: apuesta con responsabilidad.</p>
+                <p class="text-[11px] text-gray-500">El Bank junta los juegos de todos los deportes del día y solo incluye picks con edge real (Lock ≥4%, Semi Lock ≥3%, Lotto ≥5%); los ML sin cuota no entran. La confianza combina la línea de la casa sin comisión (70%) y el modelo L10 (30%); sin cuota real no hay pick. Lock y Semi Lock usan como máximo un pick por juego. Ningún pick es seguro: apuesta con responsabilidad.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PARLAYS MODAL: two 6-leg parlays (high probability / best value) built from the day's slate -->
+    <div id="parlays-modal" class="hidden fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm overflow-y-auto" onclick="if (event.target === this) closeParlays()">
+        <div class="max-w-6xl mx-auto my-6 px-4">
+            <div class="panel rounded-2xl shadow-2xl p-5 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="text-xl" aria-hidden="true">🔥</span>
+                        <h2 class="section-title">Parlays del Día</h2>
+                        <span class="text-xs text-gray-400" id="parlays-summary"></span>
+                    </div>
+                    <button onclick="closeParlays()" class="p-1.5 rounded-lg text-gray-400 hover:text-white" title="Cerrar" aria-label="Cerrar">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+                <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-300">
+                    <span><span aria-hidden="true">🔥</span> Fuego: pick con valor (edge de 3% o más)</span>
+                    <span><span aria-hidden="true">🧊</span> Hielo: el pick que más puede fallar</span>
+                </div>
+                <div id="parlays-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-4"></div>
+                <p class="text-[11px] text-gray-500 leading-relaxed">Cada parlay usa un solo pick por juego y solo picks con cuota real (DraftKings o la que escribiste). La probabilidad de cada pick combina la línea de la casa (70%) y el modelo (30%); la del parlay es el producto de todas, suponiendo que los juegos son independientes. Un parlay de 6 picks pierde la gran mayoría de las veces aunque cada pick sea bueno: apuesta solo un monto pequeño. Ningún pick es seguro: apuesta con responsabilidad.</p>
             </div>
         </div>
     </div>
@@ -1374,7 +1422,7 @@
             lucide.createIcons();
         }
 
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCalendar(); closeResults(); closeScores(); closePicks(); closeLadder(); closeAnalysis(); if (!pickerTeam) closeGame(); } });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeCalendar(); closeResults(); closeScores(); closePicks(); closeParlays(); closeLadder(); closeAnalysis(); if (!pickerTeam) closeGame(); } });
 
         // ---- Final scores (ESPN scoreboard via /api/sports/scoreboard) ----
         const SPORTS = ['NHL', 'NBA', 'NFL', 'NCAAF', 'MLB'];
@@ -3512,6 +3560,7 @@
             syncSavedPicks();
             scheduleSave();
             renderPicks();
+            renderParlays();
             if (!document.getElementById('ladder-modal').classList.contains('hidden')) drawLadder();
             renderSportSelector();
             const shown = sportGames();
@@ -4290,6 +4339,119 @@
             syncOdds({ only: game, fresh: true });
             const el = document.getElementById('an-panel');
             el.querySelector('.mk-cta:last-child')?.replaceChildren(document.createTextNode('Actualizando...'));
+        }
+
+        // ======================================================================
+        // ---- Parlays del día: 2 combinadas de 6 picks (alta probabilidad / mejor valor) ----
+        // ======================================================================
+        const PARLAY_LEGS = 6;
+        const PARLAY_MAX_STAKE = 0.01; // nunca más del 1% del bank en un parlay
+
+        function openParlays() {
+            document.getElementById('parlays-modal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            renderParlays();
+        }
+
+        function closeParlays() {
+            document.getElementById('parlays-modal')?.classList.add('hidden');
+            if (document.querySelectorAll('.fixed.inset-0:not(.hidden)').length === 0) document.body.classList.remove('overflow-hidden');
+        }
+
+        // Every priced, still-bettable main market of the day's slate (all sports)
+        function parlayPool() {
+            return games.flatMap(g => {
+                if (!g.teamA?.name || !g.teamB?.name || ['in', 'post'].includes(g.dk?.state)) return [];
+                const m = marketModel(g);
+                if (!m.ready || m.nMin < MIN_GAMES) return [];
+                return m.markets.filter(mk => mk.group === 'main' && !mk.noPick && mk.dec).map(mk => ({ g, mk }));
+            });
+        }
+
+        // Best leg per game by `score`, then the top `n` games
+        function pickLegs(pool, filter, score, n = PARLAY_LEGS) {
+            const best = new Map();
+            pool.filter(filter).sort((x, y) => score(y) - score(x)).forEach(l => { if (!best.has(l.g.id)) best.set(l.g.id, l); });
+            return [...best.values()].slice(0, n);
+        }
+
+        function buildParlays() {
+            const pool = parlayPool();
+            const safe = pickLegs(pool, l => l.mk.prob >= 0.55 && l.mk.edge >= -0.02, l => l.mk.prob + l.mk.edge);
+            const value = pickLegs(pool, l => l.mk.edge >= 0.02 && l.mk.prob >= 0.3, l => l.mk.edge + 0.1 * (l.mk.prob - 0.5));
+            return { pool, list: [
+                { key: 'safe', title: 'Parlay alta probabilidad', sub: 'Los picks con más probabilidad de pegar, sin cuota en contra', legs: safe },
+                { key: 'value', title: 'Parlay de valor', sub: 'Los picks donde la cuota paga más de lo que debería', legs: value }
+            ] };
+        }
+
+        function parlayStats(legs) {
+            const prob = legs.reduce((a, l) => a * l.mk.prob, 1);
+            const dec = legs.reduce((a, l) => a * l.mk.dec, 1);
+            const ev = prob * dec - 1;
+            // Kelly 1/4, con tope del 1% del bank
+            const kelly = dec > 1 ? (prob * dec - 1) / (dec - 1) : 0;
+            const stake = ev > 0 ? Math.min(PARLAY_MAX_STAKE, Math.max(0, kelly / 4)) : 0;
+            const weakest = legs.reduce((w, l) => (!w || l.mk.prob < w.mk.prob ? l : w), null);
+            return { prob, dec, ev, stake, weakest };
+        }
+
+        function renderParlays() {
+            const grid = document.getElementById('parlays-grid');
+            if (!grid || document.getElementById('parlays-modal').classList.contains('hidden')) return;
+            const { pool, list } = buildParlays();
+            const nGames = new Set(pool.map(l => l.g.id)).size;
+            document.getElementById('parlays-summary').innerText = nGames ? `${nGames} juegos con cuota disponibles` : '';
+            const bank = parseFloat(document.getElementById('bank-amount')?.value);
+            grid.innerHTML = list.map(par => {
+                if (par.legs.length < 2) return `
+                    <div class="pl-card">
+                        <h3 class="pl-title">${par.title}</h3>
+                        <p class="text-sm text-gray-400 mt-2">${!games.length ? 'Carga los juegos del día para armar parlays.' : 'No hay suficientes picks con cuota que cumplan hoy. Carga más juegos o espera a que DraftKings publique las líneas.'}</p>
+                    </div>`;
+                const st = parlayStats(par.legs);
+                const hot = st.ev > 0;
+                const pctTxt = st.prob >= 0.1 ? (st.prob * 100).toFixed(1) : (st.prob * 100).toFixed(2);
+                const money = Number.isFinite(bank) && bank > 0 && st.stake ? ` · $${(bank * st.stake).toFixed(2)}` : '';
+                const legs = par.legs.map(l => {
+                    const fire = l.mk.edge >= VALUE_EDGE;
+                    const ice = l === st.weakest || l.mk.prob < 0.5;
+                    const g = l.g;
+                    return `
+                        <button class="pl-leg ${fire ? 'is-fire' : ''} ${ice ? 'is-ice' : ''}" onclick="closeParlays(); openAnalysis(${g.id})">
+                            <span class="pl-icons" aria-hidden="true">${fire ? '🔥' : ''}${ice ? '🧊' : ''}</span>
+                            <span class="min-w-0 flex-1">
+                                <span class="block pl-leg-label truncate">${escapeHtml(l.mk.label)}</span>
+                                <span class="block text-[11px] text-gray-400 truncate">${g.sport} · ${escapeHtml(shortName(g, 'A'))} vs ${escapeHtml(shortName(g, 'B'))}${fmtStart(g) ? ` · ${fmtStart(g)}` : ''}</span>
+                            </span>
+                            <span class="text-right shrink-0">
+                                <span class="block pl-leg-pct">${(l.mk.prob * 100).toFixed(0)}%</span>
+                                <span class="block text-[11px] ${l.mk.edge >= VALUE_EDGE ? 'text-emerald-400' : l.mk.edge >= 0 ? 'text-gray-400' : 'text-rose-400'}">${fmtDecOdds(l.mk.dec)} · ${l.mk.edge >= 0 ? '+' : '−'}${Math.abs(l.mk.edge * 100).toFixed(1)}%</span>
+                            </span>
+                            <span class="sr-only">${fire ? 'Fuego: pick con valor. ' : ''}${ice ? 'Hielo: puede fallar.' : ''}</span>
+                        </button>`;
+                }).join('');
+                return `
+                    <div class="pl-card ${hot ? 'is-hot' : 'is-cold'}">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h3 class="pl-title"><span aria-hidden="true">${hot ? '🔥' : '🧊'}</span> ${par.title}</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">${par.sub}${par.legs.length < PARLAY_LEGS ? ` · solo ${par.legs.length} picks cumplen hoy` : ''}</p>
+                            </div>
+                            <span class="pl-badge ${hot ? 'is-hot' : 'is-cold'}">${hot ? 'Con valor' : 'Sin valor'}</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2 mt-3">
+                            <div class="pl-stat"><span>Paga</span><strong>${fmtDecOdds(st.dec)}</strong></div>
+                            <div class="pl-stat"><span>Prob. real</span><strong>${pctTxt}%</strong></div>
+                            <div class="pl-stat"><span>Valor</span><strong class="${hot ? 'text-emerald-400' : 'text-rose-400'}">${st.ev >= 0 ? '+' : '−'}${Math.abs(st.ev * 100).toFixed(0)}%</strong></div>
+                        </div>
+                        <div class="mt-3 space-y-2">${legs}</div>
+                        <p class="mt-3 text-xs ${hot ? 'text-gray-300' : 'text-gray-400'}">${hot
+                            ? `Apuesta sugerida: <strong class="text-white">${(st.stake * 100).toFixed(st.stake < 0.01 ? 2 : 0)}% del bank${money}</strong> · pierde ${(100 - st.prob * 100).toFixed(0)} de cada 100 veces.`
+                            : 'La casa cobra comisión en cada pick y aquí pesa más que el valor: no conviene apostarlo. Úsalo solo como referencia.'}</p>
+                    </div>`;
+            }).join('');
+            lucide.createIcons();
         }
 
         // ---- Service worker: app shell cache and offline fallback ----

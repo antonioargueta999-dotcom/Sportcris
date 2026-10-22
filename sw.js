@@ -1,7 +1,7 @@
 // App shell service worker: makes the site installable and opens instantly.
 // The app needs internet for live data, so pages and API calls go to the network first;
 // the cached copy is only a fallback when the connection drops.
-const VERSION = 'sportpicks-v5'
+const VERSION = 'sportpicks-v6'
 const SHELL = ['/', '/favicon.svg', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png']
 
 self.addEventListener('install', event => {

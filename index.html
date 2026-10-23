@@ -246,7 +246,7 @@
         .mk-card { border-radius: 1.9rem; padding: 1.5rem 1.3rem 1.3rem; background: linear-gradient(165deg, #131c2c, #0b111b); border: 1px solid rgba(120, 140, 170, 0.3); box-shadow: 0 30px 60px -20px rgba(0,0,0,.9); }
         .mk-team { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 2.2rem; line-height: 1; color: #f1f5fb; }
         .mk-side { display: block; margin-top: .55rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 12.5px; letter-spacing: .24em; text-transform: uppercase; color: #8a96aa; }
-        .mk-row { display: grid; grid-template-columns: minmax(6.6rem, 1.15fr) minmax(2.5rem, 1fr) 3.5rem 4.4rem; gap: .55rem; align-items: center; }
+        .mk-row { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(1.8rem, .7fr) 3.4rem 4.3rem; gap: .5rem; align-items: center; }
         .mk-label { display: block; font-size: 15px; line-height: 1.2; color: #e2e8f0; overflow-wrap: anywhere; }
         .mk-fair { display: block; font-size: 12px; line-height: 1.3; color: #7d8aa0; }
         .mk-bar { height: 10px; border-radius: 9999px; background: #182234; overflow: hidden; }
@@ -271,6 +271,23 @@
         .mk-stake-amt { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.45rem; color: #fb7185; text-align: right; }
         .mk-chip { font-size: 13px; padding: .3rem .75rem; border-radius: 9999px; border: 1px solid rgba(140, 160, 190, .35); color: #b6c2d4; background: rgba(255,255,255,.02); }
         .mk-chip.is-green { border-color: rgba(52, 211, 153, .55); color: #6ee7b7; background: rgba(16, 185, 129, .08); }
+        .sl-pick.is-strong { border-color: rgba(251, 146, 60, .5); background: linear-gradient(160deg, rgba(70, 28, 12, .5), #151f30); }
+        .sl-pick.is-strong .sl-kicker { color: #fdba74; }
+        .sd-card { display: block; width: 100%; text-align: left; border-radius: 1.4rem; padding: 1rem 1.1rem; border: 1.5px solid rgba(251, 146, 60, .55);
+            background: radial-gradient(30rem 10rem at 0% 0%, rgba(251, 146, 60, .18), transparent 70%), linear-gradient(165deg, #1a1410, #0c121d); transition: border-color .2s; }
+        button.sd-card:hover { border-color: rgba(253, 186, 116, .85); }
+        .sd-card.is-empty { border-style: dashed; border-color: rgba(140, 160, 190, .35); background: #0c121d; }
+        .sd-kicker { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: #fdba74; }
+        .sd-label { display: block; margin-top: .2rem; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.9rem; line-height: 1.05; color: #fff; }
+        .sd-pct { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.9rem; line-height: 1; color: #fff; }
+        .sd-trend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; margin-top: .7rem; }
+        .mk-pick.is-strong .sd-trend { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .sd-trend span { border-radius: .7rem; padding: .35rem .45rem; background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.07); font-size: 10.5px; color: #9fb0c8; text-align: center; line-height: 1.25; }
+        .sd-trend b { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 1.05rem; color: #fff; }
+        .mk-pick.is-strong { border-color: rgba(251, 146, 60, .6); background: linear-gradient(160deg, rgba(70, 28, 12, .55), #151f30); align-items: flex-start; }
+        .mk-trend.is-hot { color: #fdba74; }
+        .mk-alts { border-radius: 1.2rem; padding: .9rem 1rem; background: #121a28; border: 1px solid rgba(130, 150, 185, .3); display: grid; gap: .55rem; }
+        .mk-alt { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding-top: .55rem; border-top: 1px solid rgba(255,255,255,.06); }
         .pl-card { border-radius: 1.4rem; padding: 1.1rem; background: linear-gradient(165deg, #121b2a, #0c121d); border: 1px solid rgba(110, 130, 160, 0.3); }
         .pl-card.is-hot { border-color: rgba(251, 146, 60, .55); background: linear-gradient(165deg, rgba(70, 28, 12, .55), #0c121d 60%); }
         .pl-card.is-cold { border-color: rgba(125, 211, 252, .4); background: linear-gradient(165deg, rgba(12, 40, 60, .55), #0c121d 60%); }
@@ -296,7 +313,7 @@
         .mk-cta { padding: .75rem; border-radius: 1rem; background: #0b111c; border: 1px solid rgba(120, 140, 170, 0.35); color: #93c5fd; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; font-size: 13px; }
         .mk-cta:hover { color: #dbeafe; border-color: rgba(147, 197, 253, .5); }
         @media (max-width: 400px) {
-            .mk-row { grid-template-columns: minmax(5.8rem, 1.2fr) minmax(1.8rem, 1fr) 3.1rem 3.9rem; gap: .4rem; }
+            .mk-row { grid-template-columns: minmax(0, 1.8fr) minmax(1.4rem, .6fr) 3.1rem 3.9rem; gap: .4rem; }
             .mk-team { font-size: 1.9rem; } .mk-pick-label { font-size: 1.55rem; }
             .an-lines { font-size: 13px; }
         }
@@ -548,7 +565,7 @@
                 </div>
                 <div id="picks-tabs" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
                 <div id="picks-grid" class="grid grid-cols-1 gap-4"></div>
-                <p class="text-[11px] text-gray-500">El Bank junta los juegos de todos los deportes del día y solo incluye picks con edge real (Lock ≥4%, Semi Lock ≥3%, Lotto ≥5%); los ML sin cuota no entran. La confianza combina la línea de la casa sin comisión (70%) y el modelo L10 (30%); sin cuota real no hay pick. Lock y Semi Lock usan como máximo un pick por juego. Ningún pick es seguro: apuesta con responsabilidad.</p>
+                <p class="text-[11px] text-gray-500">El Bank junta los juegos de todos los deportes del día. Lock y Semi Lock son los mercados que más se cumplieron en el L10 de ambos equipos y en el H2H (Lock: tendencia ≥75% y confianza ≥60%; Semi Lock: ≥65% y ≥55%), con cuota entre -250 y más. Lotto son los picks con más valor (edge ≥4%). La confianza combina la línea de la casa sin comisión (70%) y el modelo (30%); sin cuota real no hay pick. Lock y Semi Lock usan como máximo un pick por juego. Ningún pick es seguro: apuesta con responsabilidad.</p>
             </div>
         </div>
     </div>
@@ -608,7 +625,7 @@
                     </div>
                     <div id="ladder-rungs"></div>
                 </div>
-                <p class="text-[11px] text-gray-500">El Reto Escalera usa el mismo modelo L10 del Bank, pero con filtros más estrictos: solo un pick por día, confianza ≥60% (≥63% desde $250), edge ≥3% y cuota entre -250 y +120. Cada día se apuesta toda la banca, salvo en el último escalón, donde solo se arriesga lo necesario para llegar a $1000. Si no hay un pick que cumpla, lo mejor es no jugar ese día. Una derrota reinicia el reto al Día 1 con $10. Ningún pick es seguro: apuesta con responsabilidad.</p>
+                <p class="text-[11px] text-gray-500">El Reto Escalera elige el pick con mejor tendencia del día: el mercado que se cumplió en ≥65% del L10 de ambos equipos y del H2H (cada equipo ≥60%), con confianza ≥60% (≥63% desde $250), cuota entre -250 y +120 y sin pagar mucho menos de lo justo. Cada día se apuesta toda la banca, salvo en el último escalón, donde solo se arriesga lo necesario para llegar a $1000. Si no hay un pick que cumpla, lo mejor es no jugar ese día. Una derrota reinicia el reto al Día 1 con $10. Ningún pick es seguro: apuesta con responsabilidad.</p>
             </div>
         </div>
     </div>
@@ -645,6 +662,7 @@
                 </div>
             </div>
             <p id="import-status" class="hidden text-xs text-gray-400"></p>
+            <div id="strong-day" class="hidden"></div>
             <div id="slate-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             <div id="slate-empty" class="text-center py-8 text-sm text-gray-400">
                 <i data-lucide="clipboard-list" class="w-8 h-8 mx-auto mb-2 text-gray-600"></i>
@@ -2983,9 +3001,9 @@
             MLB: { margin: 4.2, total: 4.4 }
         };
         const TIERS = [
-            { key: 'lock', name: 'Lock', count: 2, minProb: 0.62, minEdge: 0.04, units: 3, icon: 'lock', cls: 'text-emerald-400', card: 'border-emerald-500/40 bg-emerald-500/5', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' },
-            { key: 'semi', name: 'Semi Lock', count: 4, minProb: 0.56, minEdge: 0.03, units: 2, icon: 'shield', cls: 'text-blue-400', card: 'border-blue-500/40 bg-blue-500/5', badge: 'bg-blue-500/20 text-blue-300 border-blue-500/40' },
-            { key: 'lotto', name: 'Lotto', count: 8, minProb: 0, minEdge: 0.05, units: 0.5, icon: 'ticket', cls: 'text-amber-400', card: 'border-amber-500/40 bg-amber-500/5', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40' }
+            { key: 'lock', name: 'Lock', count: 2, minTrend: 0.75, minTeam: 0.6, minProb: 0.6, minEdge: -0.03, minOdds: -250, units: 3, icon: 'lock', cls: 'text-emerald-400', card: 'border-emerald-500/40 bg-emerald-500/5', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' },
+            { key: 'semi', name: 'Semi Lock', count: 4, minTrend: 0.65, minTeam: 0.55, minProb: 0.55, minEdge: -0.03, minOdds: -250, units: 2, icon: 'shield', cls: 'text-blue-400', card: 'border-blue-500/40 bg-blue-500/5', badge: 'bg-blue-500/20 text-blue-300 border-blue-500/40' },
+            { key: 'lotto', name: 'Lotto', count: 8, minTrend: 0.5, minTeam: 0, minProb: 0, minEdge: 0.04, minOdds: null, sortByEdge: true, units: 0.5, icon: 'ticket', cls: 'text-amber-400', card: 'border-amber-500/40 bg-amber-500/5', badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40' }
         ];
         const MIN_GAMES = 3;          // L10 rows each team needs before a game is eligible
         const STD_IMPLIED = 110 / 210; // break-even of a standard -110 price
@@ -3026,7 +3044,7 @@
             const matchup = `${nameB} @ ${nameA}`;
             const name = side => side === 'A' ? nameA : nameB;
             return m.markets
-                .filter(mk => mk.group === 'main' && !mk.noPick && mk.edge !== null && mk.edge >= 0.02)
+                .filter(mk => mk.group === 'main' && !mk.noPick && mk.edge !== null && mk.edge >= -0.03 && mk.trend)
                 .map(mk => {
                     const { market, side, line, prob, edge } = mk;
                     const label = market === 'ML' ? `${name(side)} ML`
@@ -3039,7 +3057,9 @@
                         injThr: p.inj.thr,
                         crests: side === 'A' || side === 'B' ? [teamInfo(game, side)] : [teamInfo(game, 'B'), teamInfo(game, 'A')],
                         odds: decToAm(mk.dec),
-                        score: prob * 100 + edge * 100
+                        trend: mk.trend, trendRate: mk.trend.rate, trendTeam: mk.trend.team, trendH2H: mk.trend.h2h,
+                        strong: mk === m.strong,
+                        score: mk.trend.rate * 100 + edge * 50 + prob * 10
                     };
                 });
         }
@@ -3051,11 +3071,14 @@
             const used = new Set();        // candidates already placed
             const safeGames = new Set();   // games already holding a Lock / Semi Lock
             const takenMarkets = new Set(); // `${gameId}-${market}` already picked
+            const byEdge = [...pool].sort((x, y) => y.edge - x.edge || y.trendRate - x.trendRate);
+            const fits = (c, tier) => c.trendRate >= tier.minTrend && c.trendTeam >= tier.minTeam && c.prob >= tier.minProb && c.edge >= tier.minEdge
+                && (tier.minOdds === null || c.odds >= tier.minOdds) && (tier.key === 'lotto' || c.trendH2H === null || c.trendH2H >= 0.5);
             return TIERS.map(tier => {
                 const picks = [];
-                for (const c of pool) {
+                for (const c of tier.sortByEdge ? byEdge : pool) {
                     if (picks.length >= tier.count) break;
-                    if (used.has(c) || c.prob < tier.minProb || c.edge < tier.minEdge) continue;
+                    if (used.has(c) || !fits(c, tier)) continue;
                     const mk = `${c.gameId}-${c.market}`;
                     if (takenMarkets.has(mk)) continue;
                     if (tier.key !== 'lotto' && safeGames.has(c.gameId)) continue;
@@ -3070,9 +3093,8 @@
 
         // Best 1-3 picks of a single game: highest edge first, one per market
         function gameRecommendedPicks(game) {
-            const byEdge = (x, y) => (y.edge ?? -1) - (x.edge ?? -1) || y.prob - x.prob;
             const seen = new Set();
-            return gamePickCandidates(game).sort(byEdge).filter(c => !seen.has(c.market) && seen.add(c.market)).slice(0, 3);
+            return gamePickCandidates(game).sort((x, y) => y.score - x.score).filter(c => !seen.has(c.market) && seen.add(c.market)).slice(0, 3);
         }
 
         // Snapshot of the recommended picks stored inside each game, so they stay in the saved analysis
@@ -3111,7 +3133,7 @@
                         </div>
                     </div>
                     <div class="flex flex-wrap items-center gap-1.5 text-[11px] mt-2 pt-2 border-t border-white/[0.06]">
-                        <span class="${c.edge === null ? 'text-gray-500' : 'text-emerald-400'} mr-auto">${c.edge === null ? 'Edge: agrega la cuota ML' : `Edge +${(c.edge * 100).toFixed(1)}%`}</span>
+                        <span class="mr-auto ${c.edge >= VALUE_EDGE ? 'text-emerald-400' : c.edge >= 0 ? 'text-gray-400' : 'text-rose-400'}">Edge ${c.edge >= 0 ? '+' : '−'}${Math.abs(c.edge * 100).toFixed(1)}%${c.trend ? ` · ${Math.round(c.trendRate * 100)}% tendencia` : ''}</span>
                         ${c.h2h.n ? `<span class="px-1.5 py-0.5 rounded border text-[10px] font-bold ${strongTrend(c.h2h) ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40' : c.h2h.rate <= 0.3 && c.h2h.n >= 4 ? 'bg-rose-500/15 text-rose-300 border-rose-500/40' : 'bg-white/5 text-gray-400 border-white/10'}" title="Así le fue a este pick en los enfrentamientos directos">H2H ${c.h2h.hits}/${c.h2h.n}</span>` : ''}
                         ${Math.abs(c.injShift) >= c.injThr * 0.5 ? `<span class="px-1.5 py-0.5 rounded border text-[10px] font-bold ${c.injShift > 0 ? 'bg-sky-500/15 text-sky-300 border-sky-500/40' : 'bg-rose-500/15 text-rose-300 border-rose-500/40'}" title="Efecto del reporte de lesiones sobre este pick">Lesiones ${c.injShift > 0 ? 'a favor' : 'en contra'}</span>` : ''}
                     </div>
@@ -3184,7 +3206,7 @@
                             </div>
                         </div>
                         <div class="flex items-center justify-between gap-2 text-[11px] mt-2 pt-2 border-t border-white/[0.06]">
-                            <span class="${c.edge === null ? 'text-gray-500' : 'text-emerald-400'}">${c.edge === null ? 'Edge: agrega la cuota ML' : `Edge +${(c.edge * 100).toFixed(1)}%`}</span>
+                            <span class="min-w-0 ${c.edge >= VALUE_EDGE ? 'text-emerald-400' : c.edge >= 0 ? 'text-gray-400' : 'text-rose-400'}">Edge ${c.edge >= 0 ? '+' : '−'}${Math.abs(c.edge * 100).toFixed(1)}%${c.trend ? `<span class="text-gray-400"> · ${escapeHtml(trendTxt(c.trend))}</span>` : ''}</span>
                             <span class="text-gray-400">${tier.units}u${toWin !== null ? ` → gana ${toWin.toFixed(2)}u` : ''}</span>
                         </div>
                     </button>`;
@@ -3192,7 +3214,7 @@
                 const missing = tier.count - picks.length;
                 const note = !shown.length ? 'Agrega juegos de cualquier deporte a la cartelera para generar picks.'
                     : !eligible ? `Cada equipo necesita al menos ${MIN_GAMES} resultados L10 cargados.`
-                    : missing ? `${picks.length ? `Solo ${picks.length} de ${tier.count}` : 'Ningún pick'} con ${tier.minProb ? `≥${Math.round(tier.minProb * 100)}% de confianza y ` : ''}edge ≥${Math.round(tier.minEdge * 100)}%. Agrega más juegos, líneas o cuotas ML.`
+                    : missing ? `${picks.length ? `Solo ${picks.length} de ${tier.count}` : 'Ningún pick'} con tendencia L10 + H2H ≥${Math.round(tier.minTrend * 100)}%${tier.minProb ? `, confianza ≥${Math.round(tier.minProb * 100)}%` : ''}${tier.sortByEdge ? ` y edge ≥${Math.round(tier.minEdge * 100)}%` : ''}. Agrega más juegos o espera las líneas de DraftKings.`
                     : '';
                 return `
                     <div class="rounded-2xl border ${tier.card} p-3.5 space-y-2.5">
@@ -3208,7 +3230,7 @@
         }
 
         // ---- Reto Escalera: $10 -> $1000 rolling one solid pick per day; any loss restarts at day 1 ----
-        const LADDER = { start: 10, goal: 1000, minProb: 0.6, highProb: 0.63, highBank: 250, minEdge: 0.03, minOdds: -250, maxOdds: 120 };
+        const LADDER = { start: 10, goal: 1000, minProb: 0.6, highProb: 0.63, highBank: 250, minEdge: -0.03, minTrend: 0.65, minTeam: 0.6, minOdds: -250, maxOdds: 120 };
         const LADDER_ICON = cls => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${cls}" aria-hidden="true"><path d="M7 2v20M17 2v20M7 6h10M7 10h10M7 14h10M7 18h10"/></svg>`;
         let ladderState = null;    // response of /api/ladder
         let ladderSlate = null;    // today's saved games when another day is open in the editor
@@ -3240,8 +3262,9 @@
             const seen = new Set();
             return list.filter(g => g.teamA?.name && g.teamB?.name).flatMap(gamePickCandidates)
                 .filter(c => c.edge !== null && c.odds !== null && c.prob >= minProb && c.edge >= LADDER.minEdge
+                    && c.trendRate >= LADDER.minTrend && c.trendTeam >= LADDER.minTeam && (c.trendH2H === null || c.trendH2H >= 0.5)
                     && c.odds >= LADDER.minOdds && c.odds <= LADDER.maxOdds && !exclude.has(`${c.matchup}|${c.label}`))
-                .sort((x, y) => (y.prob + y.edge / 2) - (x.prob + x.edge / 2))
+                .sort((x, y) => (y.trendRate + y.prob / 2 + y.edge / 2) - (x.trendRate + x.prob / 2 + x.edge / 2))
                 .filter(c => !seen.has(c.gameId) && seen.add(c.gameId))
                 .slice(0, 3)
                 .map(c => ({ ...c, game: list.find(g => g.id === c.gameId) }));
@@ -3484,7 +3507,7 @@
                                 ${ladderPickRow(c, c.crests, `
                                     <div class="text-right">
                                         <span class="block font-display font-black text-2xl leading-none ${best ? 'text-violet-300' : 'text-white'}">${Math.round(c.prob * 100)}%</span>
-                                        <span class="block text-[10px] text-gray-500 whitespace-nowrap">${fmtOdds(c.odds)} · edge +${(c.edge * 100).toFixed(1)}%</span>
+                                        <span class="block text-[10px] text-gray-500 whitespace-nowrap">${fmtOdds(c.odds)} · ${c.trend ? `tendencia ${Math.round(c.trendRate * 100)}%` : `edge ${c.edge >= 0 ? '+' : '−'}${Math.abs(c.edge * 100).toFixed(1)}%`}</span>
                                     </div>`)}
                                 <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] pt-2 border-t border-white/[0.06]">
                                     <span class="text-gray-400">Apuesta <strong class="text-white">${ladderMoney(stake)}</strong>${stake < bank ? ` <span class="text-gray-500">(guardas ${ladderMoney(bank - stake)})</span>` : ' (toda la banca)'} → banca <strong class="text-emerald-400">${ladderMoney(after)}</strong></span>
@@ -3573,20 +3596,22 @@
                 : `No hay análisis de ${currentSport} registrados este día. Pulsa <strong class="text-white">Cargar juegos</strong> para traer los de esa fecha.`;
             renderAnalysisPanel();
 
+            renderStrongOfDay();
             const ordered = [...shown].sort((x, y) => (startOf(x) ? new Date(startOf(x)).getTime() : Infinity) - (startOf(y) ? new Date(startOf(y)).getTime() : Infinity));
             list.innerHTML = ordered.map(game => {
                 const m = marketModel(game);
                 const A = escapeHtml(shortName(game, 'A'));
                 const B = escapeHtml(shortName(game, 'B'));
                 const d = 1;
-                const pick = m.ready ? (m.value || m.safe) : null;
+                const pick = m.ready ? (m.strong || m.value || m.safe) : null;
                 const loading = teamLoading(game);
                 const state = game.dk?.state;
                 const pickBox = pick ? `
-                        <div class="sl-pick ${m.value ? 'is-value' : ''}">
+                        <div class="sl-pick ${m.strong ? 'is-strong' : m.value ? 'is-value' : ''}">
                             <div class="min-w-0">
-                                <span class="sl-kicker">${m.value ? `Pick con valor · +${(m.value.edge * 100).toFixed(1)}%` : 'Pick'}</span>
+                                <span class="sl-kicker">${m.strong ? `🔥 Pick fuerte · L10 + H2H ${Math.round(m.strong.trend.rate * 100)}%` : m.value ? `Pick con valor · +${(m.value.edge * 100).toFixed(1)}%` : 'Pick'}</span>
                                 <span class="sl-pick-label">${escapeHtml(pick.label)}</span>
+                                ${m.strong ? `<span class="block text-[11px] text-gray-400 mt-0.5 truncate">${escapeHtml(trendTxt(m.strong.trend))}</span>` : ''}
                             </div>
                             <span class="sl-pick-pct">${(pick.prob * 100).toFixed(1)}%</span>
                         </div>` : `
@@ -3617,6 +3642,44 @@
                         <button onclick="openAnalysis(${game.id})" class="sl-analyze">Analizar ▸</button>
                     </div>`;
             }).join('');
+        }
+
+        // El pick fuerte del día: el mejor de todos los deportes, entre los juegos que aún no empiezan
+        function strongOfDay() {
+            return games.filter(g => g.teamA?.name && g.teamB?.name && !['in', 'post'].includes(g.dk?.state))
+                .map(g => ({ g, m: marketModel(g) })).filter(x => x.m.ready && x.m.strong)
+                .sort((x, y) => y.m.strong.score - x.m.strong.score)[0] || null;
+        }
+
+        function renderStrongOfDay() {
+            const el = document.getElementById('strong-day');
+            if (!el) return;
+            const best = games.length ? strongOfDay() : null;
+            el.classList.toggle('hidden', !games.length);
+            if (!games.length) return;
+            if (!best) {
+                el.innerHTML = `<div class="sd-card is-empty"><span class="sd-kicker">🔥 Pick fuerte del día</span>
+                    <p class="text-sm text-gray-400 mt-1">Hoy ningún mercado cumple: tendencia ≥65% en el L10 de ambos equipos y en el H2H, con cuota real entre -250 y +150. Mejor esperar a que DraftKings publique más líneas o no forzar el pick.</p></div>`;
+                return;
+            }
+            const { g, m } = best, mk = m.strong;
+            el.innerHTML = `
+                <button class="sd-card" onclick="openAnalysis(${g.id})">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="min-w-0">
+                            <span class="sd-kicker">🔥 Pick fuerte del día · ${g.sport}</span>
+                            <span class="sd-label">${escapeHtml(mk.label)}</span>
+                            <span class="block text-xs text-gray-300 mt-0.5">${escapeHtml(shortName(g, 'A'))} vs ${escapeHtml(shortName(g, 'B'))}${fmtStart(g) ? ` · ${fmtStart(g)}` : ''} · cuota ${fmtDecOdds(mk.dec)}</span>
+                        </div>
+                        <span class="text-right shrink-0"><span class="sd-pct">${(mk.prob * 100).toFixed(0)}%</span><span class="block text-[11px] text-gray-400">probabilidad</span></span>
+                    </div>
+                    <div class="sd-trend">
+                        <span>L10 local <b>${mk.trend.a.h}/${mk.trend.a.n}</b></span>
+                        <span>L10 visita <b>${mk.trend.b.h}/${mk.trend.b.n}</b></span>
+                        <span>H2H <b>${mk.trend.h.n ? `${mk.trend.h.h}/${mk.trend.h.n}` : '–'}</b></span>
+                        <span>Tendencia <b>${Math.round(mk.trend.rate * 100)}%</b></span>
+                    </div>
+                </button>`;
         }
 
         function initCharts() {
@@ -3750,6 +3813,42 @@
             const info = teamInfo(game, team);
             return info.abbr || game[team === 'A' ? 'teamA' : 'teamB'].name || (team === 'A' ? 'Local' : 'Visita');
         }
+
+        // ---- Tendencias: cuántas veces se cumplió cada mercado en el L10 de cada equipo y en el H2H ----
+        // Auditoría 1-22 oct: los mercados con tendencia ≥70% ganaron 61% (vs 45% con <50%), y la casa ya lo esperaba;
+        // la tendencia elige picks más probables, el edge dice si la cuota paga lo justo.
+        const STRONG = { minTrend: 0.65, minTeam: 0.6, minH2H: 0.5, minProb: 0.5, minEdge: -0.03, minOdds: -250, maxOdds: 150 };
+        const trendCount = (rows, f) => { let h = 0, n = 0; rows.forEach(x => { const v = f(x); if (!Number.isFinite(v) || v === 0) return; n++; if (v > 0) h++; }); return { h, n }; };
+
+        function marketTrend(game, key) {
+            const A = game.teamA.scores.filter(isComplete), B = game.teamB.scores.filter(isComplete), H = game.h2h?.games || [];
+            const [kind, rest] = key.split(':');
+            const line = rest === undefined ? null : parseFloat(rest);
+            let fa, fb, fh;
+            if (kind === 'ml-A') { fa = s => s.att - s.def; fb = s => s.def - s.att; fh = x => x.a - x.b; }
+            else if (kind === 'ml-B') { fa = s => s.def - s.att; fb = s => s.att - s.def; fh = x => x.b - x.a; }
+            else if (kind === 'sp-A') { fa = s => s.att - s.def + line; fb = s => s.def - s.att + line; fh = x => x.a - x.b + line; }
+            else if (kind === 'sp-B') { fa = s => s.def - s.att + line; fb = s => s.att - s.def + line; fh = x => x.b - x.a + line; }
+            else if (kind === 'tot-o' || kind === 'tot-u') { const sg = kind === 'tot-o' ? 1 : -1; fa = fb = s => sg * (s.att + s.def - line); fh = x => sg * (x.a + x.b - line); }
+            else if (/^tt-[AB]-[ou]$/.test(kind)) {
+                const own = kind[3], sg = kind[5] === 'o' ? 1 : -1;
+                // Total de un equipo: lo que anotó ese equipo y lo que permitió el rival en sus L10
+                if (own === 'A') { fa = s => sg * (s.att - line); fb = s => sg * (s.def - line); fh = x => sg * (x.a - line); }
+                else { fa = s => sg * (s.def - line); fb = s => sg * (s.att - line); fh = x => sg * (x.b - line); }
+            }
+            else if (kind === 'btts-y' || kind === 'btts-n') { const sg = kind === 'btts-y' ? 1 : -1; fa = fb = s => sg * (s.att > 0 && s.def > 0 ? 1 : -1); fh = x => sg * (x.a > 0 && x.b > 0 ? 1 : -1); }
+            else return null;
+            const a = trendCount(A, fa), b = trendCount(B, fb), h = trendCount(H, fh);
+            const n = a.n + b.n + h.n;
+            if (a.n < MIN_GAMES || b.n < MIN_GAMES) return null;
+            return {
+                a, b, h, rate: (a.h + b.h + h.h) / n,
+                team: Math.min(a.h / a.n, b.h / b.n),
+                h2h: h.n >= 2 ? h.h / h.n : null
+            };
+        }
+        const trendTxt = t => t ? `L10 local ${t.a.h}/${t.a.n} · visita ${t.b.h}/${t.b.n}${t.h.n ? ` · H2H ${t.h.h}/${t.h.n}` : ''}` : '';
+        const trendShort = t => t ? `L10 ${t.a.h}/${t.a.n} · ${t.b.h}/${t.b.n}${t.h.n ? ` · H2H ${t.h.h}/${t.h.n}` : ''}` : '';
 
         function marketModel(game) {
             const p = computeProjection(game);
@@ -3901,6 +4000,22 @@
                 mk.edge = mk.dec ? mk.prob - 1 / mk.dec : null;
             });
             const blended = markets.some(mk => mk.group === 'main' && mk.mkt !== null);
+            markets.forEach(mk => { mk.trend = marketTrend(game, mk.key); });
+
+            // Pick fuerte: el mercado principal que más se cumplió en el L10 de ambos equipos y en el H2H,
+            // con cuota real, probabilidad honesta ≥50% y una cuota que no esté muy por debajo de lo justo
+            const strongScore = mk => mk.trend.rate + 0.5 * mk.edge + 0.1 * mk.prob;
+            const strong = markets.filter(mk => {
+                const t = mk.trend;
+                if (mk.group !== 'main' || mk.noPick || !mk.dec || !t) return false;
+                const am = decToAm(mk.dec);
+                return t.rate >= STRONG.minTrend && t.team >= STRONG.minTeam && (t.h2h === null || t.h2h >= STRONG.minH2H)
+                    && mk.prob >= STRONG.minProb && mk.edge >= STRONG.minEdge && am >= STRONG.minOdds && am <= STRONG.maxOdds;
+            }).sort((x, y) => strongScore(y) - strongScore(x))[0] || null;
+            if (strong) strong.score = strongScore(strong);
+            // Alternativas: otros mercados (también "Más mercados") con respaldo de L10 + H2H
+            const alts = markets.filter(mk => mk !== strong && !mk.noPick && mk.trend && mk.trend.rate >= 0.6 && mk.trend.team >= 0.5 && mk.prob >= 0.45)
+                .sort((x, y) => (y.trend.rate + 0.1 * y.prob) - (x.trend.rate + 0.1 * x.prob)).slice(0, 3);
 
             const score = mk => mk.edge + 0.15 * (mk.prob - 0.5);
             const value = markets.filter(mk => !mk.noPick && mk.edge !== null && mk.edge >= VALUE_EDGE && mk.prob >= 0.4).sort((x, y) => score(y) - score(x))[0] || null;
@@ -3921,7 +4036,7 @@
             const injChips = injList.filter(x => x.k > 0.005).sort((x, y) => y.k - x.k).slice(0, 4)
                 .map(({ s, pl }) => `${nm(s)} · ${pl.name}${pl.pos ? ` (${pl.pos})` : ''} ${sevLabel[injSeverity(pl.status)]}`);
 
-            return { ready: true, p, cfg, nMin, lA, lB, attA, defA, attB, defB, pyA, pyB, log5, mlA, D, markets, value, safe, dom, adj, injChips, blended };
+            return { ready: true, p, cfg, nMin, lA, lB, attA, defA, attB, defB, pyA, pyB, log5, mlA, D, markets, value, safe, dom, adj, injChips, blended, strong, alts };
         }
 
         // Monto sugerido: Kelly fraccionado (1/4), máximo 5% del bank.
@@ -4092,7 +4207,8 @@
                 `Log5 + ventaja local ${Math.round(m.cfg.homeWin * 100)}% → ${A} ${pct1(m.log5)}`,
                 modelLine,
                 ...(m.blended ? [`Ajustando con la línea de la casa · ${Math.round(MARKET_W * 100)}% casa + ${Math.round((1 - MARKET_W) * 100)}% modelo`] : ['Sin cuotas de la casa · solo modelo, sin valor confirmado']),
-                `Escaneando ${m.markets.length} mercados · buscando valor`,
+                `Escaneando ${m.markets.length} mercados · L10 + H2H de cada uno`,
+                m.strong ? `Pick fuerte: ${m.strong.label} · tendencia ${Math.round(m.strong.trend.rate * 100)}% (${trendTxt(m.strong.trend)})` : 'Ningún mercado principal con tendencia ≥65% y cuota aceptable',
                 m.dom?.team ? `Dominio detectado: ${shortName(game, m.dom.team)}` : 'Sin dominio claro · partido parejo'
             ];
             if (m.value) lines.push(`Valor encontrado: ${m.value.label} · edge +${(m.value.edge * 100).toFixed(1)}%`);
@@ -4178,7 +4294,8 @@
                     <div class="min-w-0">
                         <span class="mk-label">${escapeHtml(mk.label)}</span>
                         <span class="mk-fair">justa ${fmtDecOdds(mk.fair)}${edgeTxt}</span>
-                        ${mk.mkt !== null ? `<span class="mk-fair">modelo ${Math.round(mk.model * 100)}% · casa ${Math.round(mk.mkt * 100)}%</span>` : ''}
+                        ${mk.trend ? `<span class="mk-fair mk-trend ${mk.trend.rate >= STRONG.minTrend ? 'is-hot' : ''}" title="${escapeHtml(trendTxt(mk.trend))}">${escapeHtml(trendShort(mk.trend))}</span>` : ''}
+                        ${mk.mkt !== null ? `<span class="mk-fair">mod ${Math.round(mk.model * 100)}% · casa ${Math.round(mk.mkt * 100)}%</span>` : ''}
                         ${mk.noPick ? '<span class="mk-fair text-amber-400">solo referencia</span>' : ''}
                     </div>
                     <div class="mk-bar"><span style="width:${Math.max(3, mk.prob * 100)}%"></span></div>
@@ -4222,27 +4339,64 @@
             }
             const main = m.markets.filter(mk => mk.group === 'main');
             const more = m.markets.filter(mk => mk.group === 'more');
-            const topKey = (m.value || m.safe)?.key;
+            const topKey = (m.strong || m.value || m.safe)?.key;
             const moreTitle = game.sport === 'NHL' ? 'Más mercados (60 min · totales por equipo · ambos anotan)'
                 : game.sport === 'MLB' ? 'Más mercados (totales por equipo · ambos anotan)' : 'Más mercados (totales por equipo)';
-            const pick = m.value || m.safe;
-            const st = stakeFor(pick);
-            const pickBox = m.value ? `
+            const pick = m.strong || m.value || m.safe;
+            const st = m.strong && !(m.strong.edge >= VALUE_EDGE) ? null : stakeFor(pick);
+            const trendRow = t => t ? `<div class="sd-trend mt-2">
+                        <span>L10 local <b>${t.a.h}/${t.a.n}</b></span><span>L10 visita <b>${t.b.h}/${t.b.n}</b></span>
+                        <span>H2H <b>${t.h.n ? `${t.h.h}/${t.h.n}` : '–'}</b></span><span>Tendencia <b>${Math.round(t.rate * 100)}%</b></span></div>` : '';
+            const strongBox = m.strong ? `
+                <div class="mk-pick is-strong">
+                    <div class="min-w-0 flex-1">
+                        <span class="mk-kicker text-orange-300">🔥 Pick fuerte · L10 + H2H</span>
+                        <span class="mk-pick-label">${escapeHtml(m.strong.label)}</span>
+                        <span class="text-xs text-gray-400">Cuota ${fmtDecOdds(m.strong.dec)} · justa ${fmtDecOdds(m.strong.fair)} · edge ${m.strong.edge >= 0 ? '+' : '−'}${Math.abs(m.strong.edge * 100).toFixed(1)}%</span>
+                        ${trendRow(m.strong.trend)}
+                    </div>
+                    <span class="mk-pick-pct">${(m.strong.prob * 100).toFixed(1)}%</span>
+                </div>` : `
+                <div class="mk-pick">
+                    <div class="min-w-0">
+                        <span class="mk-kicker text-sky-300">Sin pick fuerte</span>
+                        <span class="text-sm text-gray-300">Ningún mercado principal se cumplió en ≥65% del L10 de ambos equipos y del H2H con una cuota aceptable.</span>
+                    </div>
+                </div>`;
+            const strongStake = m.strong && !(m.strong.edge >= VALUE_EDGE) ? `
+                <div class="mk-stake">
+                    <div class="min-w-0">
+                        <span class="block text-[15px] text-gray-100 uppercase tracking-wide">Apuesta sugerida · alta probabilidad</span>
+                        <span class="block text-[13px] text-gray-400 mt-0.5">${m.strong.edge >= 0 ? 'La cuota paga lo justo: apuesta fija moderada.' : 'La cuota paga un poco menos de lo justo: apuesta fija pequeña.'}</span>
+                    </div>
+                    <span class="mk-stake-amt">${m.strong.edge >= 0 ? '1.5' : '1'}% del bank${(() => { const b = parseFloat(document.getElementById('bank-amount')?.value); return Number.isFinite(b) && b > 0 ? ` · $${(b * (m.strong.edge >= 0 ? 0.015 : 0.01)).toFixed(2)}` : ''; })()}</span>
+                </div>` : '';
+            const altBox = m.alts.length ? `
+                <div class="mk-alts">
+                    <span class="mk-kicker text-gray-300">Otras alternativas con respaldo L10 + H2H</span>
+                    ${m.alts.map(a => `<div class="mk-alt">
+                        <div class="min-w-0"><span class="block text-[15px] text-gray-100">${escapeHtml(a.label)}</span><span class="block text-[11px] text-gray-400">${escapeHtml(trendTxt(a.trend))}</span></div>
+                        <div class="text-right shrink-0"><span class="block font-bold text-white">${(a.prob * 100).toFixed(0)}%</span><span class="block text-[11px] text-gray-400">${a.dec ? fmtDecOdds(a.dec) : 'sin cuota'}</span></div>
+                    </div>`).join('')}
+                </div>` : '';
+            const valueBox = m.value && m.value !== m.strong ? `
                 <div class="mk-pick is-value">
                     <div class="min-w-0">
                         <span class="mk-kicker text-emerald-300">Valor detectado · edge +${(m.value.edge * 100).toFixed(1)}%</span>
                         <span class="mk-pick-label">${escapeHtml(m.value.label)}</span>
-                        <span class="text-xs text-gray-400">Cuota ${fmtDecOdds(m.value.dec)} · justa ${fmtDecOdds(m.value.fair)}</span>
+                        <span class="text-xs text-gray-400">Cuota ${fmtDecOdds(m.value.dec)} · justa ${fmtDecOdds(m.value.fair)}${m.value.trend ? ` · ${escapeHtml(trendTxt(m.value.trend))}` : ''}</span>
                     </div>
                     <span class="mk-pick-pct">${(m.value.prob * 100).toFixed(1)}%</span>
-                </div>` : `
+                </div>` : '';
+            const safeBox = !m.strong && !m.value && m.safe ? `
                 <div class="mk-pick">
                     <div class="min-w-0">
-                        <span class="mk-kicker text-sky-300">Sin ventaja clara · <span class="normal-case tracking-[0.12em]">opción más segura</span></span>
+                        <span class="mk-kicker text-sky-300">Opción más probable</span>
                         <span class="mk-pick-label">${escapeHtml(m.safe.label)}</span>
                     </div>
                     <span class="mk-pick-pct">${(m.safe.prob * 100).toFixed(1)}%</span>
-                </div>`;
+                </div>` : '';
+            const pickBox = strongBox + valueBox + safeBox;
             const bank = parseFloat(document.getElementById('bank-amount')?.value);
             const money = Number.isFinite(bank) && bank > 0 && st?.frac ? ` · $${(bank * st.frac).toFixed(2)}` : '';
             const stakeBox = st && st.minDec ? `
@@ -4272,7 +4426,7 @@
                     <summary class="mk-more">${moreTitle}</summary>
                     <div class="mt-3 space-y-3">${more.map(mk => marketRow(mk, mk.key === topKey)).join('')}</div>
                 </details>` : ''}
-                <div class="mt-5 space-y-3">${pickBox}${stakeBox}</div>
+                <div class="mt-5 space-y-3">${pickBox}${strongStake}${stakeBox}${altBox}</div>
                 ${chips ? `<div class="flex flex-wrap gap-2 mt-4">${chips}</div>` : ''}
                 <div class="grid grid-cols-2 gap-2 mt-5">
                     <button onclick="openFullAnalysis()" class="mk-cta">Análisis completo</button>
